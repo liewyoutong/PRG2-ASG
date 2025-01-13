@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\SCHOOL MATERIALS\\PRG 2\\PRG2 assignment\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment.csproj": {}
+    "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment.csproj": {}
   },
   "projects": {
-    "D:\\SCHOOL MATERIALS\\PRG 2\\PRG2 assignment\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment.csproj": {
+    "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\SCHOOL MATERIALS\\PRG 2\\PRG2 assignment\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment.csproj",
+        "projectUniqueName": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment.csproj",
         "projectName": "PRG 2 Assignment",
-        "projectPath": "D:\\SCHOOL MATERIALS\\PRG 2\\PRG2 assignment\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment.csproj",
-        "packagesPath": "C:\\Users\\15796\\.nuget\\packages\\",
-        "outputPath": "D:\\SCHOOL MATERIALS\\PRG 2\\PRG2 assignment\\PRG 2 Assignment\\PRG 2 Assignment\\obj\\",
+        "projectPath": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment.csproj",
+        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\15796\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
