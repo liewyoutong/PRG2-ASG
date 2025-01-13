@@ -2,15 +2,31 @@
 
 class Terminal
 {
-    string terminalName { get; set; }
-    Dictionary<string, Airline> airlines { get; set; } = new Dictionary<string, Airline>();
-    Dictionary<string,Flight> flights { get; set; } = new Dictionary<string, Flight>();
-    Dictionary<string,BoardingGate> boardingGates { get; set; } = new Dictionary<string, BoardingGate>();
-    Dictionary<string,double> gateFees { get; set; } = new Dictionary<string,double>();
+    string TerminalName { get; set; }
+    Dictionary<string, Airline> Airlines { get; set; } = new Dictionary<string, Airline>();
+    Dictionary<string,Flight> Flights { get; set; } = new Dictionary<string, Flight>();
+    Dictionary<string,BoardingGate> BoardingGates { get; set; } = new Dictionary<string, BoardingGate>();
+    Dictionary<string,double> GateFees { get; set; } = new Dictionary<string,double>();
 
     public Terminal(string terminalname) 
     { 
-        terminalName=terminalname;
+        TerminalName=terminalname;
+    }
+    public bool AddAirline (Airline airline)
+    {
+
+    }
+    public bool AddBoardingGate(BoardingGate boardingGate)
+    {
+
+    }
+    public void PrintAirlineFees()
+    {
+
+    }
+    public override string ToString()
+    {
+        
     }
 
 
