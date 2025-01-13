@@ -3,8 +3,40 @@
   "WorkspaceRootPath": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|c:\\users\\user\\desktop\\youtong\\prg 2 assignment\\prg 2 assignment\\prg 2 assignment\\terminal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|solutionrelative:prg 2 assignment\\terminal.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|c:\\users\\user\\desktop\\youtong\\prg 2 assignment\\prg 2 assignment\\prg 2 assignment\\airline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|solutionrelative:prg 2 assignment\\airline.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|c:\\users\\user\\desktop\\youtong\\prg 2 assignment\\prg 2 assignment\\prg 2 assignment\\cfftflight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|solutionrelative:prg 2 assignment\\cfftflight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|c:\\users\\user\\desktop\\youtong\\prg 2 assignment\\prg 2 assignment\\prg 2 assignment\\ddjbflight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|solutionrelative:prg 2 assignment\\ddjbflight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|c:\\users\\user\\desktop\\youtong\\prg 2 assignment\\prg 2 assignment\\prg 2 assignment\\lwttflight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|solutionrelative:prg 2 assignment\\lwttflight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|c:\\users\\user\\desktop\\youtong\\prg 2 assignment\\prg 2 assignment\\prg 2 assignment\\normflight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|solutionrelative:prg 2 assignment\\normflight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|c:\\users\\user\\desktop\\youtong\\prg 2 assignment\\prg 2 assignment\\prg 2 assignment\\boardinggate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|solutionrelative:prg 2 assignment\\boardinggate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|c:\\users\\user\\desktop\\youtong\\prg 2 assignment\\prg 2 assignment\\prg 2 assignment\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|solutionrelative:prg 2 assignment\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|c:\\users\\user\\desktop\\youtong\\prg 2 assignment\\prg 2 assignment\\prg 2 assignment\\flight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{707B115B-3B44-494C-B28C-0C380BEF9B00}|PRG 2 Assignment\\PRG 2 Assignment.csproj|solutionrelative:prg 2 assignment\\flight.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,15 +46,123 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 9,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CFFTFlight.cs",
+              "DocumentMoniker": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\CFFTFlight.cs",
+              "RelativeDocumentMoniker": "PRG 2 Assignment\\CFFTFlight.cs",
+              "ToolTip": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\CFFTFlight.cs",
+              "RelativeToolTip": "PRG 2 Assignment\\CFFTFlight.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-13T07:06:30.208Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DDJBFlight.cs",
+              "DocumentMoniker": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\DDJBFlight.cs",
+              "RelativeDocumentMoniker": "PRG 2 Assignment\\DDJBFlight.cs",
+              "ToolTip": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\DDJBFlight.cs",
+              "RelativeToolTip": "PRG 2 Assignment\\DDJBFlight.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-13T07:06:02.864Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LWTTFlight.cs",
+              "DocumentMoniker": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\LWTTFlight.cs",
+              "RelativeDocumentMoniker": "PRG 2 Assignment\\LWTTFlight.cs",
+              "ToolTip": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\LWTTFlight.cs",
+              "RelativeToolTip": "PRG 2 Assignment\\LWTTFlight.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-13T07:05:45.855Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "NORMFlight.cs",
+              "DocumentMoniker": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\NORMFlight.cs",
+              "RelativeDocumentMoniker": "PRG 2 Assignment\\NORMFlight.cs",
+              "ToolTip": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\NORMFlight.cs",
+              "RelativeToolTip": "PRG 2 Assignment\\NORMFlight.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-13T07:05:26.721Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "BoardingGate.cs",
+              "DocumentMoniker": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\BoardingGate.cs",
+              "RelativeDocumentMoniker": "PRG 2 Assignment\\BoardingGate.cs",
+              "ToolTip": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\BoardingGate.cs",
+              "RelativeToolTip": "PRG 2 Assignment\\BoardingGate.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-13T07:05:07.652Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Flight.cs",
+              "DocumentMoniker": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\Flight.cs",
+              "RelativeDocumentMoniker": "PRG 2 Assignment\\Flight.cs",
+              "ToolTip": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\Flight.cs",
+              "RelativeToolTip": "PRG 2 Assignment\\Flight.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-13T07:00:25.382Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Airline.cs",
+              "DocumentMoniker": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\Airline.cs",
+              "RelativeDocumentMoniker": "PRG 2 Assignment\\Airline.cs",
+              "ToolTip": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\Airline.cs",
+              "RelativeToolTip": "PRG 2 Assignment\\Airline.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-13T06:59:56.716Z",
+              "EditorCaption": ""
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Terminal.cs",
+              "DocumentMoniker": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\Terminal.cs",
+              "RelativeDocumentMoniker": "PRG 2 Assignment\\Terminal.cs",
+              "ToolTip": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\Terminal.cs",
+              "RelativeToolTip": "PRG 2 Assignment\\Terminal.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-01-13T06:59:46.946Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\user\\Desktop\\youtong\\PRG 2 Assignment\\PRG 2 Assignment\\PRG 2 Assignment\\Program.cs",
               "RelativeDocumentMoniker": "PRG 2 Assignment\\Program.cs",
