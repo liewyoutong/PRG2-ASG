@@ -1,5 +1,4 @@
-﻿using PRG_2_Assignment;
-
+﻿
 class Terminal
 {
     string TerminalName { get; set; }
@@ -28,9 +27,5 @@ class Terminal
     {
         
     }
-
-
-
-
 
 }

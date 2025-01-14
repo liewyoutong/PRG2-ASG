@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Globalization;
 
-namespace PRG_2_Assignment
+class NORMFlight: Flight
 {
-    internal class NORMFlight
+    public NORMFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status) : base(flightNumber, origin, destination, expectedTime, status) { }
+    public override double CalculateFees()
     {
+        return 100; //im not sure return what help 
+    }
+    public override string ToString()
+    {
+        return base.ToString(); // not sure if correct
     }
 }
