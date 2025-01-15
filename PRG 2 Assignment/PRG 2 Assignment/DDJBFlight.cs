@@ -8,7 +8,9 @@
 
     public override double CalculateFees()
     {
-        return RequestFee; // i dont know if correct 
+        double basefee = 300;
+        double totalfee = basefee + RequestFee;
+        return totalfee;
     }
     public override string ToString()
     {
