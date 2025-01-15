@@ -1,0 +1,15 @@
+D:\SCHOOL MATERIALS\PRG 2\PRG2 Assignment\PRG 2 Assignment\PRG 2 Assignment\obj\Debug\net8.0\PRG 2 Assignment.GeneratedMSBuildEditorConfig.editorconfig
+D:\SCHOOL MATERIALS\PRG 2\PRG2 Assignment\PRG 2 Assignment\PRG 2 Assignment\obj\Debug\net8.0\PRG 2 Assignment.AssemblyInfoInputs.cache
+D:\SCHOOL MATERIALS\PRG 2\PRG2 Assignment\PRG 2 Assignment\PRG 2 Assignment\obj\Debug\net8.0\PRG 2 Assignment.AssemblyInfo.cs
+D:\SCHOOL MATERIALS\PRG 2\PRG2 Assignment\PRG 2 Assignment\PRG 2 Assignment\obj\Debug\net8.0\PRG 2 Assignment.csproj.CoreCompileInputs.cache
+D:\SCHOOL MATERIALS\PRG 2\PRG2 Assignment\PRG 2 Assignment\PRG 2 Assignment\obj\Debug\net8.0\PRG 2 Assignment.sourcelink.json
+D:\SCHOOL MATERIALS\PRG 2\PRG2 Assignment\PRG 2 Assignment\PRG 2 Assignment\bin\Debug\net8.0\PRG 2 Assignment.exe
+D:\SCHOOL MATERIALS\PRG 2\PRG2 Assignment\PRG 2 Assignment\PRG 2 Assignment\bin\Debug\net8.0\PRG 2 Assignment.deps.json
+D:\SCHOOL MATERIALS\PRG 2\PRG2 Assignment\PRG 2 Assignment\PRG 2 Assignment\bin\Debug\net8.0\PRG 2 Assignment.runtimeconfig.json
+D:\SCHOOL MATERIALS\PRG 2\PRG2 Assignment\PRG 2 Assignment\PRG 2 Assignment\bin\Debug\net8.0\PRG 2 Assignment.dll
+D:\SCHOOL MATERIALS\PRG 2\PRG2 Assignment\PRG 2 Assignment\PRG 2 Assignment\bin\Debug\net8.0\PRG 2 Assignment.pdb
+D:\SCHOOL MATERIALS\PRG 2\PRG2 Assignment\PRG 2 Assignment\PRG 2 Assignment\obj\Debug\net8.0\PRG 2 Assignment.dll
+D:\SCHOOL MATERIALS\PRG 2\PRG2 Assignment\PRG 2 Assignment\PRG 2 Assignment\obj\Debug\net8.0\refint\PRG 2 Assignment.dll
+D:\SCHOOL MATERIALS\PRG 2\PRG2 Assignment\PRG 2 Assignment\PRG 2 Assignment\obj\Debug\net8.0\PRG 2 Assignment.pdb
+D:\SCHOOL MATERIALS\PRG 2\PRG2 Assignment\PRG 2 Assignment\PRG 2 Assignment\obj\Debug\net8.0\PRG 2 Assignment.genruntimeconfig.cache
+D:\SCHOOL MATERIALS\PRG 2\PRG2 Assignment\PRG 2 Assignment\PRG 2 Assignment\obj\Debug\net8.0\ref\PRG 2 Assignment.dll
