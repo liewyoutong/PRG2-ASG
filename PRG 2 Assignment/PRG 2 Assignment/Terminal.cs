@@ -34,17 +34,16 @@ class Terminal
 
     public Airline GetAirlineFromFlight(Flight flight)
     {
-        string flightCode = flight.FlightNumber.Substring(0, 2);
-        Airline? airline = null;
-
-        foreach (KeyValuePair<string, Airline> kvp in Airlines)
+        string code = "";
+        for (int i = 0; i < 2; i++)
         {
-            if (kvp.Key == flightCode)
-            {
-                airline = kvp.Value;
-            }
+            code += flight.FlightNumber[i];
         }
-        return airline;
+
+        if (Airlines.ContainsKey(code))
+            return Airlines[code];
+
+        return null;
     }
 
     //public void PrintAirlineFees()
