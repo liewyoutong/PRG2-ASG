@@ -1,7 +1,7 @@
 ﻿class DDJBFlight : Flight
 {
     public double RequestFee { get; set; }
-    public DDJBFlight(string flightNumber, string origin, string destination, DateTime expectedTime, string status, double requestFee) : base(flightNumber, origin, destination, expectedTime, status)
+    public DDJBFlight(string flightNumber, string origin, string destination, DateTime expectedTime, double requestFee) : base(flightNumber, origin, destination, expectedTime)
     {
         RequestFee = requestFee;
     }

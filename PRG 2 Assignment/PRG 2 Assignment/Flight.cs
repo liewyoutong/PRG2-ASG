@@ -4,14 +4,13 @@
     public string Origin { get; set; }
     public string Destination { get; set; }
     public DateTime? ExpectedTime { get; set; }
-    public string Status { get; set; }
-    public Flight (string flightnumber, string origin, string destination,DateTime expectedtime, string status)
+    public string Status { get; set; } =  "On Time";
+    public Flight(string flightnumber, string origin, string destination, DateTime expectedtime)
     {
         FlightNumber = flightnumber;
         Origin = origin;
         Destination = destination;
         ExpectedTime = expectedtime;
-        Status = status;
     }
     public abstract double CalculateFees();
     public override string ToString()

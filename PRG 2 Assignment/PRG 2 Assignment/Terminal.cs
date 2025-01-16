@@ -11,21 +11,21 @@ class Terminal
     {
         TerminalName = terminalname;
     }
-    public bool AddAirline(Airline airline)
-    {
+    //public bool AddAirline(Airline airline)
+    //{
 
-    }
-    public bool AddBoardingGate(BoardingGate boardingGate)
-    {
+    //}
+    //public bool AddBoardingGate(BoardingGate boardingGate)
+    //{
 
-    }
+    //}
     public void PrintAirlineFees()
     {
 
     }
-    public override string ToString()
-    {
+    //public override string ToString()
+    //{
 
-    }
+    //}
 
 }
