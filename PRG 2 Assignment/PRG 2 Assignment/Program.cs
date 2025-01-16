@@ -1,15 +1,67 @@
 ﻿
-Dictionary<string, Flight> flightDict = new Dictionary<string, Flight>();
-Dictionary<string, string> airlineDict = new Dictionary<string, string>();
+//Dictionary<string, Flight> flightDict = new Dictionary<string, Flight>();
+//Dictionary<string, string> airlineDict = new Dictionary<string, string>();
+Terminal terminal = new Terminal("Terminal 5");
 string[] flightFile = File.ReadAllLines("flights.csv");
 string[] boardingFile = File.ReadAllLines("boardinggates.csv");
 string[] airlineFile = File.ReadAllLines("airlines.csv");
+
+
 void DisplayLoadingMenu()
 {
+    Console.WriteLine("Loading Airlines..."); Console.WriteLine("8 Airlines Loaded!");
+    Console.WriteLine("Loading Boarding Gates..."); Console.WriteLine("66 Boarding Gates Loaded!");
+    Console.WriteLine("Loading Flights..."); Console.WriteLine("30 Flights Loaded!");
+}
+void DisplayMenu()
+{
+    Console.WriteLine("=============================================");
+    Console.WriteLine("Welcome to Changi Airport Terminal 5"); Console.WriteLine("=============================================");
+    Console.WriteLine("1. List All Flights"); Console.WriteLine("2. List Boarding Gates");
+    Console.WriteLine("3. Assign a Boarding Gate to a Flight"); Console.WriteLine("4. Create Flight");
+    Console.WriteLine("5. Display Airline Flights"); Console.WriteLine("6. Modify Flight Detailst");
+    Console.WriteLine("7. Display Flight Schedule"); Console.WriteLine("0. Exit");
+    Console.WriteLine(); Console.WriteLine("Please select your choice: ");
+}
+// start of task 1 
 
+void LoadAirlinefiles(Terminal terminal) // task 1 
+{
+    using (StreamReader sr = new StreamReader("airlines.csv"))
+    {
+        string s = sr.ReadLine();
+        while ((s = sr.ReadLine()) != null)
+        {
+            string[] airlineData = s.Split(',');
+            string name = airlineData[0];
+            string code = airlineData[1];
+            Airline airline = new Airline(name, code);
+            terminal.AddAirline(airline);
+        }
+    }
+}
+LoadAirlinefiles(terminal);
+void LoadBoaringGatefiles(Terminal terminal)
+{
+    using (StreamReader sr = new StreamReader("boardinggates.csv"))
+    {
+        string s = sr.ReadLine();
+        while ((s = sr.ReadLine()) != null)
+        {
+            string[] boardingData = s.Split(',');
+            string gateName = boardingData[0];
+            bool supportsDDJB = Convert.ToBoolean(boardingData[1]);
+            bool supportsCFFT = Convert.ToBoolean(boardingData[2]);
+            bool supportsLWTT = Convert.ToBoolean(boardingData[3]);
+            BoardingGate gate = new BoardingGate(gateName, supportsCFFT, supportsDDJB, supportsLWTT);
+            terminal.AddBoardingGate(gate);
+        }
+    }
 }
 
+LoadBoaringGatefiles(terminal);
 
+// end of task 1 
 void LoadFlightfiles() //task 2
 {
 
@@ -45,51 +97,54 @@ void LoadFlightfiles() //task 2
             flight = new LWTTFlight(flightNumber, origin, destination, expectedTime, 500);
         }
 
-        if (flight != null && !flightDict.ContainsKey(flightNumber))
+        if (flight != null && !terminal.Flights.ContainsKey(flightNumber))
         {
-            flightDict.Add(flightNumber, flight);
+            terminal.Flights.Add(flightNumber, flight);
         }
     }
 }
 LoadFlightfiles();
 
-void FlightInfo()//task 3
-{ 
-    Console.WriteLine("Flight Number Airline Name        Origin                   Destination           Expected Departure/Arrival Time");
+void FlightInfo(Dictionary<string, Airline> airlineDict)//task 3
+{
+    Console.WriteLine("Flight Number  Airline Name        Origin                   Destination             Expected Departure/Arrival Time");
     Console.WriteLine("----------------------------------------------------------------------------------------------------------------");
 
-    for (int i = 1; i < airlineFile.Length; i++) 
-    {
-        string[] airlineData = airlineFile[i].Split(',');
-        if (airlineData.Length >= 2) 
-        {
-            string airlineName = airlineData[0];
-            string airlineCode = airlineData[1];
-            if (!airlineDict.ContainsKey(airlineCode))
-            {
-                airlineDict.Add(airlineCode, airlineName);
-            }   
-        }
-    }
-    foreach (Flight flight in flightDict.Values)
-    {
+    foreach (Flight flight in terminal.Flights.Values)
+    { 
         string airlineName = "";
         string code = "";
-        for (int i = 0; i < 2 && i < flight.FlightNumber.Length; i++)
+        for (int i = 0; i < 2; i++)
         {
             code += flight.FlightNumber[i];
         }
-        if (airlineDict.ContainsKey(code))
-        {
-            airlineName = airlineDict[code];
-        }
 
-        Console.WriteLine($"{flight.FlightNumber,-15}{airlineName,-20}{flight.Origin,-25}{flight.Destination,-25}{flight.ExpectedTime,-25}");
+        if (terminal.Airlines.ContainsKey(code))
+        {
+            Airline airline = terminal.Airlines[code];
+            airlineName = airline.Name;
+
+            Console.WriteLine($"{flight.FlightNumber,-15}{airlineName,-20}{flight.Origin,-25}{flight.Destination,-25}{flight.ExpectedTime,-25}");
+        }
     }
 }
-FlightInfo();
 
-void AssignBoardingGate() //task 5
+FlightInfo(terminal.Airlines);
+
+    // start of task 4  
+void DisplayBDList()
+{
+    Console.WriteLine("=============================================");
+    Console.WriteLine("List of Boarding Gates for Changi Airport Terminal 5");
+    Console.WriteLine("=============================================");
+    Console.WriteLine($"{"Gate Name",-16}{"DDJB",-23}{"CFFT",-23}{"LWTT"}");
+    foreach (var boardinggate in terminal.BoardingGates.Values)
+    {
+        Console.WriteLine($"{boardinggate.GateName,-16}{boardinggate.SupportsDDJB,-23}{boardinggate.SupportsCFFT,-23}{boardinggate.SupportsLWTT}");
+    }
+}
+DisplayBDList();
+void AssignBoardingGate(Dictionary<string, Flight> flightDict) //task 5
 {
     Console.Write("Enter flight number: ");
     string flightNum = Console.ReadLine();
@@ -102,7 +157,7 @@ void AssignBoardingGate() //task 5
         Console.WriteLine($"Origin: {flight.Origin}\n");
         Console.WriteLine($"Destination: {flight.Destination}\n");
         Console.WriteLine($"Expected Time: {flight.ExpectedTime} \n");
-        if (flight is DDJBFlight )
+        if (flight is DDJBFlight)
         {
             Console.WriteLine("Special Request Code: DDJB");
         }
@@ -118,26 +173,17 @@ void AssignBoardingGate() //task 5
         {
             Console.WriteLine("Special Request Code: None");
         }
-     }
-    
+    }
+
     else { Console.WriteLine("Invalid flight number"); }
 
-    List<BoardingGate> boardingGates = new List<BoardingGate>();
-    for (int i = 1; i < boardingFile.Length; i++) 
-    {
-        string[] boardingData = boardingFile[i].Split(",");
-        string gateName = boardingData[0];
-        bool supportsDDJB = Convert.ToBoolean(boardingData[1]);
-        bool supportsCFFT = Convert.ToBoolean(boardingData[2]);
-        bool supportsLWTT = Convert.ToBoolean(boardingData[3]); 
-        BoardingGate gate = new BoardingGate(gateName, supportsCFFT, supportsDDJB, supportsLWTT);
-        boardingGates.Add(gate);
-    }
+    
+
     bool gateFound = false;
     BoardingGate chosenGate = null;
-    foreach (BoardingGate gate in boardingGates)
+    foreach (BoardingGate gate in terminal.BoardingGates.Values)
     {
-        if(gate.GateName == boardinggate)
+        if (gate.GateName == boardinggate)
         {
             chosenGate = gate;
             Console.WriteLine($"Boarding Gate Name: {gate.GateName}");
@@ -193,7 +239,7 @@ void AssignBoardingGate() //task 5
     Console.WriteLine($"Assigned Boarding Gate: {chosenGate.GateName}");
 
 }
-AssignBoardingGate();
+AssignBoardingGate(terminal.Flights);
 
 void CreateFlights()
 {
@@ -202,7 +248,7 @@ void CreateFlights()
     Console.Write("Enter your Origin: ");
     string newOrigin = Console.ReadLine();
     Console.Write("Enter your Airline Name:");
-    string newAirline = Console.ReadLine() ;
+    string newAirline = Console.ReadLine();
     Console.Write("Enter your Destination: ");
     string newDestination = Console.ReadLine();
     Console.Write("Enter your Expected Departure/Arrival Time (hh:mm AM/PM): ");
@@ -233,4 +279,21 @@ void CreateFlights()
     Console.WriteLine($"Destination: {newDestination}");
     Console.WriteLine($"Special Request Code: {specialRequestCode}");
 }
-CreateFlights();    
+CreateFlights();
+
+
+// Main program 
+DisplayLoadingMenu();
+while (true)
+{
+    DisplayMenu();
+    int option = Convert.ToInt32(Console.ReadLine());
+    if (option == 0)
+    {
+        Console.WriteLine("Goodbye!");
+    }
+    else if (option == 1)
+    {
+        FlightInfo(terminal.Airlines);
+    }
+}
