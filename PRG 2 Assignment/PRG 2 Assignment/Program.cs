@@ -430,7 +430,7 @@ void ModifyFlightDetails() // task 8
             flight.Status = newStatus == 1 ? "Delayed" : newStatus == 2 ? "Boarding" : "On Time";
             Console.WriteLine("Flight status has been updated.");
         }
-        else if (ModifyOption == 3)
+        else if (ModifyOption == 3) //NOT SURE HOW TO DO 
         {
             Console.WriteLine("1. DDJB");
             Console.WriteLine("2. CFFT");
@@ -465,7 +465,8 @@ void ModifyFlightDetails() // task 8
     Console.WriteLine($"Destination: {flight.Destination}");
     Console.WriteLine($"Expected Departure/Arrival Time: {flight.ExpectedTime:dd/M/yyyy h:mm:ss tt}");
     Console.WriteLine($"Status: {flight.Status}");
-    Console.WriteLine($"Boarding Gate: {null}");
+    Console.WriteLine($"Special Request Code: {null}"); //NOT SURE HOW TO DO
+        Console.WriteLine($"Boarding Gate: {terminal.BoardingGates[flightName].GateName}");
 }
     else if (option == 2)
     {
@@ -529,6 +530,11 @@ while (true)
     else if (option == 6)
     {
         ModifyFlightDetails();
+        Spaces();
+    }
+    else if (option ==7)
+    {
+        //put your method here
         Spaces();
     }
     
