@@ -1,11 +1,9 @@
-﻿
-//Dictionary<string, Flight> flightDict = new Dictionary<string, Flight>();
-//Dictionary<string, string> airlineDict = new Dictionary<string, string>();
-Terminal terminal = new Terminal("Terminal 5");
-string[] flightFile = File.ReadAllLines("flights.csv");
-string[] boardingFile = File.ReadAllLines("boardinggates.csv");
-string[] airlineFile = File.ReadAllLines("airlines.csv");
+﻿//==========================================================
+// Student Name : Liew You Tong (S10268015F)
+// Student Name : Gao Yu Hao ()
+//==========================================================
 
+Terminal terminal = new Terminal("Terminal 5");
 
 void DisplayLoadingMenu()
 {
@@ -23,7 +21,15 @@ void DisplayMenu()
     Console.WriteLine("7. Display Flight Schedule"); Console.WriteLine("0. Exit");
     Console.WriteLine(); Console.WriteLine("Please select your choice: ");
 }
-// start of task 1 
+void Spaces()
+{
+    Console.WriteLine();
+    Console.WriteLine();
+    Console.WriteLine();
+    Console.WriteLine();
+    Console.WriteLine();
+}
+
 
 void LoadAirlinefiles(Terminal terminal) // task 1 
 {
@@ -61,45 +67,53 @@ void LoadBoaringGatefiles(Terminal terminal)
 
 LoadBoaringGatefiles(terminal);
 
-// end of task 1 
+
 void LoadFlightfiles() //task 2
 {
-
-    for (int i = 1; i < flightFile.Length; i++)
+    using (StreamReader sr = new StreamReader("flights.csv"))
     {
-        string[]flightData = flightFile[i].Split(',');
-        string flightNumber = flightData[0];
-        string origin = flightData[1];
-        string destination = flightData[2];
-        string time = flightData[3];
-        string specialRequestCode = flightData[4];
-        DateTime expectedTime = DateTime.ParseExact(time, "h:mm tt", null);
-        Flight flight = null;
+        string s = sr.ReadLine();
+        while ((s = sr.ReadLine()) != null)
+        {
+            string[] flightData = s.Split(',');
+            string flightNumber = flightData[0];
+            string origin = flightData[1];
+            string destination = flightData[2];
+            string time = flightData[3];
+            string specialRequestCode = flightData[4];
+            DateTime expectedTime = DateTime.ParseExact(time, "h:mm tt", null);
+            Flight flight = null;
+            string airlineCode = flightNumber.Substring(0, 2);
+            if (string.IsNullOrWhiteSpace(specialRequestCode))
+            {
+                specialRequestCode = "NORM";
+            }
+            if (specialRequestCode == "CFFT")
+            {
+                flight = new CFFTFlight(flightNumber, origin, destination, expectedTime, 150);
+            }
+            else if (specialRequestCode == "NORM")
+            {
+                flight = new NORMFlight(flightNumber, origin, destination, expectedTime);
+            }
+            else if (specialRequestCode == "DDJB")
+            {
+                flight = new DDJBFlight(flightNumber, origin, destination, expectedTime, 300);
+            }
+            else if (specialRequestCode == "LWTT")
+            {
+                flight = new LWTTFlight(flightNumber, origin, destination, expectedTime, 500);
+            }
 
-        if (string.IsNullOrWhiteSpace(specialRequestCode))
-        {
-            specialRequestCode = "NORM";
-        }
-        if (specialRequestCode == "CFFT")
-        {
-            flight = new CFFTFlight(flightNumber, origin, destination, expectedTime, 150);
-        }
-        else if (specialRequestCode == "NORM")
-        {
-            flight = new NORMFlight(flightNumber, origin, destination, expectedTime);
-        }
-        else if (specialRequestCode == "DDJB")
-        {
-            flight = new DDJBFlight(flightNumber, origin, destination, expectedTime,  300); 
-        }
-        else if (specialRequestCode == "LWTT")
-        {
-            flight = new LWTTFlight(flightNumber, origin, destination, expectedTime, 500);
-        }
-
-        if (flight != null && !terminal.Flights.ContainsKey(flightNumber))
-        {
-            terminal.Flights.Add(flightNumber, flight);
+            if (flight != null && !terminal.Flights.ContainsKey(flightNumber))
+            {
+                terminal.Flights.Add(flightNumber, flight);
+            }
+            if (terminal.Airlines.ContainsKey(airlineCode))
+            {
+                Airline airline = terminal.Airlines[airlineCode];
+                airline.Flights[flightNumber] = flight;
+            }
         }
     }
 }
@@ -116,13 +130,9 @@ void FlightInfo(Dictionary<string, Airline> airlineDict)//task 3
         string airlineName = airline.Name;
 
             Console.WriteLine($"{flight.FlightNumber,-15}{airlineName,-20}{flight.Origin,-25}{flight.Destination,-25}{flight.ExpectedTime,-25}");
-        }
     }
-
-FlightInfo(terminal.Airlines);
-
-    // start of task 4  
-void DisplayBDList()
+}
+void DisplayBGList() // task 4 
 {
     Console.WriteLine("=============================================");
     Console.WriteLine("List of Boarding Gates for Changi Airport Terminal 5");
@@ -133,7 +143,7 @@ void DisplayBDList()
         Console.WriteLine($"{boardinggate.GateName,-16}{boardinggate.SupportsDDJB,-23}{boardinggate.SupportsCFFT,-23}{boardinggate.SupportsLWTT}");
     }
 }
-DisplayBDList();
+
 void AssignBoardingGate(Dictionary<string, Flight> flightDict) //task 5
 {
     Console.Write("Enter flight number: ");
@@ -167,9 +177,10 @@ void AssignBoardingGate(Dictionary<string, Flight> flightDict) //task 5
 
     else { Console.WriteLine("Invalid flight number"); }
 
-    
+
 
     bool gateFound = false;
+
     BoardingGate chosenGate = null;
     foreach (BoardingGate gate in terminal.BoardingGates.Values)
     {
@@ -227,32 +238,31 @@ void AssignBoardingGate(Dictionary<string, Flight> flightDict) //task 5
     Console.WriteLine($"Flight Number: {flight.FlightNumber}");
     Console.WriteLine($"Status: {flight.Status}");
     Console.WriteLine($"Assigned Boarding Gate: {chosenGate.GateName}");
-
 }
-AssignBoardingGate(terminal.Flights);
 
-void CreateFlights()
+
+void CreateFlights() // task 6
 {
     while (true)
     {
         Console.Write("Enter your flight: ");
         string? newFlightNum = Console.ReadLine();
         Console.Write("Enter your Origin: ");
-        string ?newOrigin = Console.ReadLine();
+        string? newOrigin = Console.ReadLine();
         Console.Write("Enter your Airline Name:");
-        string ?newAirline = Console.ReadLine();
+        string? newAirline = Console.ReadLine();
         Console.Write("Enter your Destination: ");
-        string?newDestination = Console.ReadLine();
+        string? newDestination = Console.ReadLine();
         Console.Write("Enter your Expected Departure/Arrival Time (hh:mm AM/PM): ");
         string? time = Console.ReadLine();
         DateTime expectedTime;
         if (!DateTime.TryParseExact(time, "h:mm tt", null, System.Globalization.DateTimeStyles.None, out expectedTime))
         {
             Console.WriteLine("Invalid time format. Please enter the time in hh:mm AM/PM format.");
-            return; 
+            return;
         }
 
-        DateTime now = DateTime.Now; 
+        DateTime now = DateTime.Now;
         expectedTime = new DateTime(now.Year, now.Month, now.Day, expectedTime.Hour, expectedTime.Minute, 0);
 
         Console.Write("Would you like to enter any Special Requst Code? Y/N ");
@@ -325,11 +335,123 @@ void CreateFlights()
         }
     }
 }
-CreateFlights();
+
+void DisplayAirlineFlights() // task 7
+{
+    Console.WriteLine("=============================================");
+    Console.WriteLine("List of Airlines for Changi Airport Terminal 5");
+    Console.WriteLine("=============================================");
+    Console.WriteLine("Airline Code  Airline Name");
+
+    foreach (var airlines in terminal.Airlines.Values)
+    {
+        Console.WriteLine($"{airlines.Code,-13}{airlines.Name}");
+    }
+
+    Console.Write("Enter Airline Code: ");
+    string airlineCode = Console.ReadLine().ToUpper();
+
+    if (terminal.Airlines.ContainsKey(airlineCode))
+    {
+        Airline airline = terminal.Airlines[airlineCode];
+
+        Console.WriteLine($"Number of flights for {airline.Name}: {airline.Flights.Count}");
+
+        Console.WriteLine("=============================================");
+        Console.WriteLine($"List of Flights for {airline.Name}");
+        Console.WriteLine("=============================================");
+        Console.WriteLine($"{"Flight Number",-16}{"Airline Name",-23}{"Origin",-23}{"Destination",-23}Expected Departure/Arrival Time");
+
+        if (airline.Flights.Count == 0)
+        {
+            Console.WriteLine("No flights available for this airline.");
+        }
+
+        else
+        {
+            foreach (Flight flight in airline.Flights.Values)
+            {
+                Console.WriteLine($"{flight.FlightNumber,-16}{airline.Name,-23}{flight.Origin,-23}{flight.Destination,-23}{flight.ExpectedTime}");
+            }
+        }
+    }
+    else
+    {
+        Console.WriteLine("Invalid Airline Code.");
+    }
+}
+
+void ModifyFlightDetails() // task 8 
+{
+    DisplayAirlineFlights();
+    Console.Write("Choose an existing Flight to modify or delete:  ");
+    string flightName = Console.ReadLine().ToUpper();
+    Console.WriteLine("1. Modify Flight");
+    Console.WriteLine("2. Delete Flight");
+    Console.WriteLine("Choose an option: ");
+    int option = Convert.ToInt32(Console.ReadLine());
+    if (option == 1)
+    {
+        Flight flight = terminal.Flights[flightName];
+        Airline airline = terminal.GetAirlineFromFlight(flight);
+        Console.WriteLine("1. Modify Basic Information");
+        Console.WriteLine("2. Modify Status");
+        Console.WriteLine("3. Modify Special Request Code");
+        Console.WriteLine("4. Modify Boarding Gate");
+        Console.WriteLine("Choose an option: ");
+        int option2 = Convert.ToInt32(Console.ReadLine());
+        if (option == 1)
+        {
+            Console.Write("Enter new Origin: ");
+            string newOrigin = Console.ReadLine();
+            Console.Write("Enter new Destination: ");
+            string newDestination = Console.ReadLine();
+            Console.Write("Enter new Expected Departure/Arrival Time (dd/mm/yyyy hh:mm): ");
+            string time = Console.ReadLine();
+            DateTime expectedTime;
+            if (!DateTime.TryParseExact(time, "dd/M/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out expectedTime))
+            {
+                Console.WriteLine("Invalid time format. Please enter the time in dd/mm/yyyy hh:mm format.");
+                return;
+            }
+
+            flight.Origin = newOrigin;
+            flight.Destination = newDestination;
+            flight.ExpectedTime = expectedTime;
+        }
+        Console.WriteLine("Flight updated!");
+        Console.WriteLine($"Flight Number: {flight.FlightNumber}");
+        Console.WriteLine($"Airline Name: {airline.Name}");
+        Console.WriteLine($"Origin: {flight.Origin}");
+        Console.WriteLine($"Destination: {flight.Destination}");
+        Console.WriteLine($"Expected Departure/Arrival Time: {flight.ExpectedTime:dd/M/yyyy h:mm:ss tt}");
+    }
+    else if (option == 2)
+    {
+        if (terminal.Flights.ContainsKey(flightName))
+        {
+            Flight flight = terminal.Flights[flightName];
+            Airline airline = terminal.GetAirlineFromFlight(flight);
+            airline.RemoveFlight(flight);
+            terminal.Flights.Remove(flightName);
+            Console.WriteLine($"Flight {flightName} has been successfully deleted.");
+        }
+        else
+        {
+            Console.WriteLine("Invalid Flight Number.");
+        }
+    }
+    else
+    {
+        Console.WriteLine("Invalid choice.");
+
+    }
+}
 
 
-// Main program 
-DisplayLoadingMenu();
+        //Main program
+        DisplayLoadingMenu();
+Spaces();
 while (true)
 {
     DisplayMenu();
@@ -341,5 +463,32 @@ while (true)
     else if (option == 1)
     {
         FlightInfo(terminal.Airlines);
+        Spaces();
     }
+    else if (option == 2)
+    {
+        DisplayBGList();
+        Spaces();
+    }
+    else if (option == 3)
+    {
+        AssignBoardingGate(terminal.Flights);
+        Spaces();
+    }
+    else if (option == 4)
+    {
+        CreateFlights();
+        Spaces();
+    }
+    else if (option == 5)
+    {
+        DisplayAirlineFlights();
+        Spaces();
+    }
+    else if (option == 6)
+    {
+        ModifyFlightDetails();
+        Spaces();
+    }
+    
 }
