@@ -394,13 +394,14 @@ void ModifyFlightDetails() // task 8
     {
         Flight flight = terminal.Flights[flightName];
         Airline airline = terminal.GetAirlineFromFlight(flight);
-        Console.WriteLine("1. Modify Basic Information");
-        Console.WriteLine("2. Modify Status");
+        Console.WriteLine("Choose an option to modify:");
+        Console.WriteLine("1. Modify Origin/Destination/Expected Time");
+        Console.WriteLine("2. Modify Flight Status");
         Console.WriteLine("3. Modify Special Request Code");
         Console.WriteLine("4. Modify Boarding Gate");
-        Console.WriteLine("Choose an option: ");
-        int option2 = Convert.ToInt32(Console.ReadLine());
-        if (option == 1)
+        Console.Write("Enter your choice: ");
+        int ModifyOption = Convert.ToInt32(Console.ReadLine());
+        if (ModifyOption == 1)
         {
             Console.Write("Enter new Origin: ");
             string newOrigin = Console.ReadLine();
@@ -408,24 +409,64 @@ void ModifyFlightDetails() // task 8
             string newDestination = Console.ReadLine();
             Console.Write("Enter new Expected Departure/Arrival Time (dd/mm/yyyy hh:mm): ");
             string time = Console.ReadLine();
-            DateTime expectedTime;
-            if (!DateTime.TryParseExact(time, "dd/M/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out expectedTime))
+            if (DateTime.TryParseExact(time, "dd/M/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime expectedTime))
+            {
+                flight.Origin = newOrigin;
+                flight.Destination = newDestination;
+                flight.ExpectedTime = expectedTime;
+            }
+            else
             {
                 Console.WriteLine("Invalid time format. Please enter the time in dd/mm/yyyy hh:mm format.");
-                return;
             }
-
-            flight.Origin = newOrigin;
-            flight.Destination = newDestination;
-            flight.ExpectedTime = expectedTime;
         }
-        Console.WriteLine("Flight updated!");
-        Console.WriteLine($"Flight Number: {flight.FlightNumber}");
-        Console.WriteLine($"Airline Name: {airline.Name}");
-        Console.WriteLine($"Origin: {flight.Origin}");
-        Console.WriteLine($"Destination: {flight.Destination}");
-        Console.WriteLine($"Expected Departure/Arrival Time: {flight.ExpectedTime:dd/M/yyyy h:mm:ss tt}");
+        else if (ModifyOption == 2)
+        {
+            Console.WriteLine("1. Delayed");
+            Console.WriteLine("2. Boarding");
+            Console.WriteLine("3. On Time");
+            Console.Write("Choose new status: ");
+            int newStatus = Convert.ToInt32(Console.ReadLine());
+            flight.Status = newStatus == 1 ? "Delayed" : newStatus == 2 ? "Boarding" : "On Time";
+            Console.WriteLine("Flight status has been updated.");
+        }
+        else if (ModifyOption == 3)
+        {
+            Console.WriteLine("1. DDJB");
+            Console.WriteLine("2. CFFT");
+            Console.WriteLine("3. LWTT");
+            Console.WriteLine("4. None");
+            Console.Write("Choose new Special Request Code: ");
+            int newCode = Convert.ToInt32(Console.ReadLine());
+        }
+        else if (ModifyOption == 4)
+        {
+            Console.Write("Enter new Boarding Gate: ");
+            string newGate = Console.ReadLine();
+            if (terminal.BoardingGates.ContainsKey(flightName))
+            {
+                terminal.BoardingGates[flightName].GateName = newGate;
+            }
+            else
+            {
+                terminal.BoardingGates.Add(flightName, new BoardingGate(newGate, false, false, false));
+            }
+        }
+    else
+    {
+        Console.WriteLine("Invalid option. Please restart and enter a valid number between 1 and 4.");
     }
+
+
+    Console.WriteLine("Flight updated!");
+    Console.WriteLine($"Flight Number: {flight.FlightNumber}");
+    Console.WriteLine($"Airline Name: {airline.Name}");
+    Console.WriteLine($"Origin: {flight.Origin}");
+    Console.WriteLine($"Destination: {flight.Destination}");
+    Console.WriteLine($"Expected Departure/Arrival Time: {flight.ExpectedTime:dd/M/yyyy h:mm:ss tt}");
+    Console.WriteLine($"Status: {flight.Status}");
+    Console.WriteLine($"Boarding Gate: {null}");
+}
     else if (option == 2)
     {
         if (terminal.Flights.ContainsKey(flightName))
@@ -449,8 +490,8 @@ void ModifyFlightDetails() // task 8
 }
 
 
-        //Main program
-        DisplayLoadingMenu();
+//Main program
+DisplayLoadingMenu();
 Spaces();
 while (true)
 {
