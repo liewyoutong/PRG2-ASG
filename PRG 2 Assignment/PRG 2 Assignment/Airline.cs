@@ -11,17 +11,27 @@
         Flights = new Dictionary<string, Flight>();
     }
 
-    //public bool AddFlight(Flight flight)
-    //{
-
-    //}
+    public bool AddFlight(Flight flight)
+    {
+        if (Flights.ContainsKey(flight.FlightNumber))
+        {
+            return false;
+        }
+        Flights.Add(flight.FlightNumber, flight);
+        return true;
+    }
     //public double CalculateFees()
     //{
 
     //}
     public bool RemoveFlight(Flight flight)
     {
-        return Flights.Remove(flight.FlightNumber);
+        if (Flights.ContainsKey(flight.FlightNumber))
+        {
+            Flights.Remove(flight.FlightNumber);
+            return true;
+        }
+        return false;
     }
     public override string ToString()
     {
