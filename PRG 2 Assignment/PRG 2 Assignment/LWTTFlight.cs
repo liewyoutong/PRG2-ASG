@@ -14,6 +14,6 @@
     }
     public override string ToString()
     {
-        return base.ToString(); // idk if this correct 
+        return ""; 
     }
 }

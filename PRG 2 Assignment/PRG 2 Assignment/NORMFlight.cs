@@ -19,6 +19,6 @@ class NORMFlight : Flight
     }
     public override string ToString()
     {
-        return base.ToString(); // not sure if correct
+        return ""; 
     }
 }

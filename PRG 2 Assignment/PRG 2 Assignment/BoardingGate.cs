@@ -12,13 +12,13 @@
         SupportsDDJB = supportsDDJB;
         SupportsLWTT = supportsLWTT;
     }
-    public double CalculateFees()
+    /* public double CalculateFees()
     {
-        return 0; // idk what is this
-    }
+        return 0; 
+    } */
     public override string ToString()
     {
-        return base.ToString(); //idk also
+        return "";
     }
 
 

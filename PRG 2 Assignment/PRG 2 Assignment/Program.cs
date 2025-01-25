@@ -137,7 +137,6 @@ void FlightInfo(Dictionary<string, Airline> airlineDict)//task 3
             Console.WriteLine($"{flight.FlightNumber,-15}{airlineName,-20}{flight.Origin,-25}{flight.Destination,-25}{flight.ExpectedTime,-25}");
         }
 
-        else { continue; }
     }
 }
 void DisplayBGList() // task 4 
@@ -266,13 +265,13 @@ void CreateFlights() // task 6
         DateTime expectedTime;
         while (true) // allow the user to enter the time again if the input is invalid
         {
-            Console.Write("\nEnter Expected Departure/Arrival Time (dd/MM/yyyy HH:mm): ");
+            Console.Write("\nEnter Expected Departure/Arrival Time (dd/M/yyyy HH:mm): ");
             string? time = Console.ReadLine();
-            if (DateTime.TryParseExact(time, "dd/MM/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out expectedTime))
+            if (DateTime.TryParseExact(time, "dd/M/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out expectedTime))
             {
                 break; // Exit the loop if input is valid
             }
-            Console.WriteLine("\nInvalid time format. Please enter the time in dd/MM/yyyy HH:mm format.");
+            Console.WriteLine("\nInvalid time format. Please enter the time in dd/M/yyyy HH:mm format.");
         }
 
 
@@ -389,8 +388,16 @@ void CreateFlights() // task 6
         Console.WriteLine("1. Modify Flight");
         Console.WriteLine("2. Delete Flight");
         Console.WriteLine("Choose an option: ");
-        int option = Convert.ToInt32(Console.ReadLine());
-        
+        int option;
+        try
+        {
+        option = Convert.ToInt32(Console.ReadLine());
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Invalid option. Please enter a number between 1 and 2.");
+            return;
+        }
     if (option == 1)
         {
             Flight flight = terminal.Flights[flightName];
@@ -408,7 +415,7 @@ void CreateFlights() // task 6
             string newOrigin = Console.ReadLine();
             Console.Write("Enter new Destination: ");
             string newDestination = Console.ReadLine();
-            Console.Write("Enter new Expected Departure/Arrival Time (dd/mm/yyyy hh:mm): ");
+            Console.Write("Enter new Expected Departure/Arrival Time (dd/MM/yyyy hh:mm): ");
             string time = Console.ReadLine();
             if (DateTime.TryParseExact(time, "dd/M/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime expectedTime))
             {
@@ -431,7 +438,7 @@ void CreateFlights() // task 6
             flight.Status = newStatus == 1 ? "Delayed" : newStatus == 2 ? "Boarding" : "On Time";
             Console.WriteLine("Flight status has been updated.");
         }
-        else if (ModifyOption == 3) //NOT SURE HOW TO DO 
+        else if (ModifyOption == 3)
         {
             {
                 Console.WriteLine("1. DDJB");
@@ -598,53 +605,65 @@ void DisplayScheduledFlight(Terminal terminal, List<Flight> flightList) //task 9
 
 
 
-    //Main program
-    DisplayLoadingMenu();
-    Spaces();
+//Main program
+DisplayLoadingMenu();
+Spaces();
 while (true)
-    {
+{
     List<Flight> flightList = new List<Flight>();
-        DisplayMenu();
-        int option = Convert.ToInt32(Console.ReadLine());
-        if (option == 0)
-        {
-            Console.WriteLine("Goodbye!");
-            break;
-        }
-        else if (option == 1)
-        {
-            FlightInfo(terminal.Airlines);
-            Spaces();
-        }
-        else if (option == 2)
-        {
-            DisplayBGList();
-            Spaces();
-        }
-        else if (option == 3)
-        {
-            AssignBoardingGate(terminal.Flights);
-            Spaces();
-        }
-        else if (option == 4)
-        {
-            CreateFlights();
-            Spaces();
-        }
-        else if (option == 5)
-        {
-            DisplayAirlineFlights();
-            Spaces();
-        }
-        else if (option == 6)
-        {
-            ModifyFlightDetails();
-            Spaces();
-        }
-        else if (option == 7)
-        {
-            DisplayScheduledFlight(terminal, flightList);
-            Spaces();
-        }
-
+    DisplayMenu();
+    int option;
+    try
+    {
+        option = Convert.ToInt32(Console.ReadLine());
     }
+    catch (FormatException)
+    {
+        Console.WriteLine("Invalid option. Please enter a number between 0 and 7.");
+        continue;
+    }
+    if (option == 0)
+    {
+        Console.WriteLine("Goodbye!");
+        break;
+    }
+    else if (option == 1)
+    {
+        FlightInfo(terminal.Airlines);
+        Spaces();
+    }
+    else if (option == 2)
+    {
+        DisplayBGList();
+        Spaces();
+    }
+    else if (option == 3)
+    {
+        AssignBoardingGate(terminal.Flights);
+        Spaces();
+    }
+    else if (option == 4)
+    {
+        CreateFlights();
+        Spaces();
+    }
+    else if (option == 5)
+    {
+        DisplayAirlineFlights();
+        Spaces();
+    }
+    else if (option == 6)
+    {
+        ModifyFlightDetails();
+        Spaces();
+    }
+    else if (option == 7)
+    {
+        DisplayScheduledFlight(terminal, flightList);
+        Spaces();
+    }
+    else
+    {
+        Console.WriteLine("Invalid option. Please enter a number between 0 and 7.");
+    }
+}

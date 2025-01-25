@@ -21,6 +21,6 @@
     }
     public override string ToString()
     {
-        return $"{FlightNumber,-8} {Origin,-20} {Destination,-20} {ExpectedTime,-24} {Status,-12}";
+        return ""; 
     }
 }

@@ -20,10 +20,7 @@
         Flights.Add(flight.FlightNumber, flight);
         return true;
     }
-    //public double CalculateFees()
-    //{
 
-    //}
     public bool RemoveFlight(Flight flight)
     {
         if (Flights.ContainsKey(flight.FlightNumber))
@@ -33,8 +30,8 @@
         }
         return false;
     }
-    public override string ToString()
+    public override string ToString() 
     {
-        return base.ToString(); //idk 
+        return "";
     }
 }
