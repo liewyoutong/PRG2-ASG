@@ -35,8 +35,10 @@ class Airline
         }
         return false;
     }
-    public override string ToString() 
+    public override string ToString()
     {
-        return "";
+        return $"Airline Name: {Name}\n" +
+               $"Airline Code: {Code}";
+
     }
 }

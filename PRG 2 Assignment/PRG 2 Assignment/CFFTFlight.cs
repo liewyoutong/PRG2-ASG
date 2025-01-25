@@ -1,5 +1,5 @@
 ﻿//==========================================================
-// Student Number : 
+// Student Number : S10268208B
 // Student Name : Gao Yu Hao
 // Partner Name : Liew You Tong
 //==========================================================
@@ -19,6 +19,10 @@ class CFFTFlight : Flight
     }
     public override string ToString()
     {
-        return "";
+        return $"Flight Number: {FlightNumber}\n" +
+               $"Origin: {Origin}\n" +
+               $"Destination: {Destination}\n" +
+               $"Expected Time: {ExpectedTime}\n";
+
     }
 }

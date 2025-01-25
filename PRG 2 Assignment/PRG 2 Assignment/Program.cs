@@ -1,6 +1,6 @@
 ﻿//==========================================================
 // Student Name : Liew You Tong (S10268015F)
-// Student Name : Gao Yu Hao ()
+// Student Name : Gao Yu Hao (S10268208B)
 //==========================================================
 
 using System.Collections.Generic;
@@ -178,10 +178,7 @@ void AssignBoardingGate(Dictionary<string, Flight> flightDict) //task 5
     Flight flight = flightDict[flightNum];
     if (flightDict.ContainsKey(flightNum))
     {
-        Console.WriteLine($"\nFlight Number: {flight.FlightNumber}\n");
-        Console.WriteLine($"Origin: {flight.Origin}\n");
-        Console.WriteLine($"Destination: {flight.Destination}\n");
-        Console.WriteLine($"Expected Time: {flight.ExpectedTime} \n");
+        Console.WriteLine(flight.ToString());
         DisplaySpeicalCode(flight);
     }
 
@@ -198,10 +195,7 @@ void AssignBoardingGate(Dictionary<string, Flight> flightDict) //task 5
         {
             chosenGate = gate;
             gate.flight = flight;
-            Console.WriteLine($"Boarding Gate Name: {gate.GateName}");
-            Console.WriteLine($"Supports DDJB: {gate.SupportsDDJB}");
-            Console.WriteLine($"Supports CFFT: {gate.SupportsCFFT}");
-            Console.WriteLine($"Supports LWTT: {gate.SupportsLWTT}");
+            Console.WriteLine(gate.ToString());
             gateFound = true;
             break;
         }
@@ -245,10 +239,6 @@ void AssignBoardingGate(Dictionary<string, Flight> flightDict) //task 5
         flight.Status = "On Time";
         Console.WriteLine("No changes made to the flight status.");
     }
-    Console.WriteLine("Updated Flight Details: ");
-    Console.WriteLine($"Flight Number: {flight.FlightNumber}");
-    Console.WriteLine($"Status: {flight.Status}");
-    Console.WriteLine($"Assigned Boarding Gate: {chosenGate.GateName}");
 }
 
 
@@ -436,7 +426,7 @@ void CreateFlights() // task 6
             Console.Write("Choose new status: ");
             int newStatus = Convert.ToInt32(Console.ReadLine());
             flight.Status = newStatus == 1 ? "Delayed" : newStatus == 2 ? "Boarding" : "On Time";
-            Console.WriteLine("Flight status has been updated.");
+            Console.WriteLine("Flight status has been updated.\n");
         }
         else if (ModifyOption == 3)
         {

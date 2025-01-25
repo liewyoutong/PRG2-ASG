@@ -3,6 +3,8 @@
 // Student Name : liew You Tong
 // Partner Name : Gao Yu Hao
 //==========================================================
+using static System.Runtime.InteropServices.JavaScript.JSType;
+
 class BoardingGate
 {
     public string GateName { get; set; }
@@ -23,7 +25,10 @@ class BoardingGate
     } */
     public override string ToString()
     {
-        return "";
+        return $"Gate Name: {GateName}\n" +
+               $"Supports DDJB: {SupportsDDJB}\n"+
+               $"Supports CFFT: {SupportsCFFT}\n" +
+               $"Supports LWTT: {SupportsLWTT}\n";
     }
 
 

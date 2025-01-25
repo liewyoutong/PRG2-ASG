@@ -4,7 +4,7 @@
 // Partner Name : Gao Yu Hao
 //==========================================================
 
-abstract class Flight:IComparable<Flight>
+abstract class Flight : IComparable<Flight>
 {
     public string FlightNumber { get; set; }
     public string Origin { get; set; }
@@ -27,6 +27,9 @@ abstract class Flight:IComparable<Flight>
     }
     public override string ToString()
     {
-        return ""; 
+        return $"Flight Number: {FlightNumber}\n"+
+               $"Origin: {Origin}\n"+
+               $"Destination: {Destination}\n"+
+               $"Expected Time: {ExpectedTime} \n";
     }
 }
