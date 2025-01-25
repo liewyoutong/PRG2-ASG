@@ -1,4 +1,9 @@
-﻿class LWTTFlight : Flight
+﻿//==========================================================
+// Student Number : 
+// Student Name : Gao Yu Hao
+// Partner Name : Liew You Tong
+//==========================================================
+class LWTTFlight : Flight
 {
     public double RequestFee { get; set; }
     public LWTTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, double requestFee) : base(flightNumber, origin, destination, expectedTime)

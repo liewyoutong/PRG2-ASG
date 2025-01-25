@@ -1,4 +1,9 @@
-﻿class CFFTFlight : Flight
+﻿//==========================================================
+// Student Number : 
+// Student Name : Gao Yu Hao
+// Partner Name : Liew You Tong
+//==========================================================
+class CFFTFlight : Flight
 {
     public double RequestFee { get; set; }
     public CFFTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, double requestFee): base(flightNumber, origin, destination, expectedTime)

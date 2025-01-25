@@ -1,4 +1,9 @@
-﻿class Airline
+﻿//==========================================================
+// Student Number : S10268015F
+// Student Name : liew You Tong
+// Partner Name : Gao Yu Hao
+//==========================================================
+class Airline
 {
     public string Name { get; set; }
     public string Code { get; set; }

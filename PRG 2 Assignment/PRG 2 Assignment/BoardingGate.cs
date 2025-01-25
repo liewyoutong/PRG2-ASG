@@ -1,4 +1,9 @@
-﻿class BoardingGate
+﻿//==========================================================
+// Student Number : S10268015F
+// Student Name : liew You Tong
+// Partner Name : Gao Yu Hao
+//==========================================================
+class BoardingGate
 {
     public string GateName { get; set; }
     public bool SupportsCFFT { get; set; }

@@ -1,5 +1,8 @@
-﻿using System.Globalization;
-
+﻿//==========================================================
+// Student Number : 
+// Student Name : Gao Yu Hao
+// Partner Name : Liew You Tong
+//==========================================================
 class NORMFlight : Flight
 {
     public NORMFlight(string flightNumber, string origin, string destination, DateTime expectedTime)

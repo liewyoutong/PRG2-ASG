@@ -1,4 +1,10 @@
-﻿abstract class Flight:IComparable<Flight>
+﻿//==========================================================
+// Student Number : S10268015F
+// Student Name : liew You Tong
+// Partner Name : Gao Yu Hao
+//==========================================================
+
+abstract class Flight:IComparable<Flight>
 {
     public string FlightNumber { get; set; }
     public string Origin { get; set; }

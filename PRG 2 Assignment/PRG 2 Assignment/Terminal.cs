@@ -1,4 +1,8 @@
-﻿
+﻿//==========================================================
+// Student Number : 
+// Student Name : Gao Yu Hao
+// Partner Name : Liew You Tong
+//==========================================================
 class Terminal
 {
     public string TerminalName { get; set; }
