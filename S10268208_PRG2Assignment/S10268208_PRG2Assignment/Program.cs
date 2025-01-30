@@ -17,12 +17,20 @@ void DisplayLoadingMenu()
 void DisplayMenu()
 {
     Console.WriteLine("=============================================");
-    Console.WriteLine("Welcome to Changi Airport Terminal 5"); Console.WriteLine("=============================================");
-    Console.WriteLine("1. List All Flights"); Console.WriteLine("2. List Boarding Gates");
-    Console.WriteLine("3. Assign a Boarding Gate to a Flight"); Console.WriteLine("4. Create Flight");
-    Console.WriteLine("5. Display Airline Flights"); Console.WriteLine("6. Modify Flight Detailst");
-    Console.WriteLine("7. Display Flight Schedule"); Console.WriteLine("0. Exit");
-    Console.WriteLine(); Console.Write("Please select your choice: ");
+    Console.WriteLine("Welcome to Changi Airport Terminal 5");
+    Console.WriteLine("=============================================");
+    Console.WriteLine("1. List All Flights"); 
+    Console.WriteLine("2. List Boarding Gates");
+    Console.WriteLine("3. Assign a Boarding Gate to a Flight");
+    Console.WriteLine("4. Create Flight");
+    Console.WriteLine("5. Display Airline Flights"); 
+    Console.WriteLine("6. Modify Flight Detailst");
+    Console.WriteLine("7. Display Flight Schedule");
+    Console.WriteLine("8. Process all unassigned flights to boarding gates in bulk");
+    Console.WriteLine("9. Display the total fee per airline for the day");
+    Console.WriteLine("0. Exit");
+    Console.WriteLine();
+    Console.Write("Please select your choice: ");
 }
 void Spaces()
 {
@@ -93,7 +101,7 @@ void LoadFlightfiles() //task 2
             }
             if (specialRequestCode == "CFFT")
             {
-                flight = new CFFTFlight(flightNumber, origin, destination, expectedTime, 150);
+                flight = new CFFTFlight(flightNumber, origin, destination, expectedTime);
             }
             else if (specialRequestCode == "NORM")
             {
@@ -101,11 +109,11 @@ void LoadFlightfiles() //task 2
             }
             else if (specialRequestCode == "DDJB")
             {
-                flight = new DDJBFlight(flightNumber, origin, destination, expectedTime, 300);
+                flight = new DDJBFlight(flightNumber, origin, destination, expectedTime);
             }
             else if (specialRequestCode == "LWTT")
             {
-                flight = new LWTTFlight(flightNumber, origin, destination, expectedTime, 500);
+                flight = new LWTTFlight(flightNumber, origin, destination, expectedTime);
             }
 
             if (flight != null && !terminal.Flights.ContainsKey(flightNumber))
@@ -285,15 +293,15 @@ void CreateFlights() // task 6
             Flight newFlight;
             if (specialRequestCode.ToUpper() == "CFFT")
             {
-                newFlight = new CFFTFlight(newFlightNum, newOrigin, newDestination, expectedTime, 150);
+                newFlight = new CFFTFlight(newFlightNum, newOrigin, newDestination, expectedTime);
             }
             else if (specialRequestCode.ToUpper() == "LWTT")
             {
-                newFlight = new LWTTFlight(newFlightNum, newOrigin, newDestination, expectedTime, 500);
+                newFlight = new LWTTFlight(newFlightNum, newOrigin, newDestination, expectedTime);
             }
             else if (specialRequestCode.ToUpper() == "DDJB")
             {
-                newFlight = new DDJBFlight(newFlightNum, newOrigin, newDestination, expectedTime, 300);
+                newFlight = new DDJBFlight(newFlightNum, newOrigin, newDestination, expectedTime);
             }
             else
             {
@@ -437,21 +445,21 @@ void CreateFlights() // task 6
                 Console.WriteLine("4. None");
                 Console.Write("Choose new Special Request Code: ");
                 int newCode = Convert.ToInt32(Console.ReadLine());
-                DateTime expectedTime = flight.ExpectedTime.Value;
+                DateTime expectedTime = flight.ExpectedTime;
                 Flight modifiedFlight;
                 switch (newCode)
                 {
                     case 1:
-                        modifiedFlight = new DDJBFlight(flight.FlightNumber, flight.Origin, flight.Destination, expectedTime, 300);
+                        modifiedFlight = new DDJBFlight(flight.FlightNumber, flight.Origin, flight.Destination, expectedTime);
                         Console.WriteLine("Special Request Code updated to DDJB.");
              
                         break;
                     case 2:
-                        modifiedFlight = new CFFTFlight(flight.FlightNumber, flight.Origin, flight.Destination, expectedTime, 150);
+                        modifiedFlight = new CFFTFlight(flight.FlightNumber, flight.Origin, flight.Destination, expectedTime);
                         Console.WriteLine("Special Request Code updated to CFFT.");
                         break;
                     case 3:
-                        modifiedFlight = new LWTTFlight(flight.FlightNumber, flight.Origin, flight.Destination, expectedTime, 500);
+                        modifiedFlight = new LWTTFlight(flight.FlightNumber, flight.Origin, flight.Destination, expectedTime);
                         Console.WriteLine("Special Request Code updated to LWTT.");
                         break;
                     case 4:
@@ -593,6 +601,26 @@ void DisplayScheduledFlight(Terminal terminal, List<Flight> flightList) //task 9
     }
 }
 
+bool AssignAllFlights()//ADvance feature A
+{
+    return true;
+}
+
+void Displaytotalfee() //Advance feature b
+{
+    bool allFlightsAssigned = AssignAllFlights(); 
+
+    if (!allFlightsAssigned)
+    {
+        Console.WriteLine("Please ensure that all unassigned flights have their boarding gates assigned before running this feature again.");
+    }
+    else
+    {
+        terminal.PrintAirlineFees();
+    }
+}
+
+
 
 
 //Main program
@@ -650,6 +678,18 @@ while (true)
     else if (option == 7)
     {
         DisplayScheduledFlight(terminal, flightList);
+        Spaces();
+        flightList.Sort();
+
+    }
+    else if(option == 8)
+    {
+        AssignAllFlights();
+        Spaces();
+    }
+    else if (option == 9)
+    {
+        Displaytotalfee();
         Spaces();
     }
     else

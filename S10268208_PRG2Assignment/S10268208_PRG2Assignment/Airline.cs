@@ -35,6 +35,16 @@ class Airline
         }
         return false;
     }
+    public double CalculateFees()
+    {
+        double airlineFee = 0;
+        foreach (Flight flight in Flights.Values)
+        {
+            airlineFee += flight.CalculateFees();
+        }
+        return airlineFee;
+    }
+
     public override string ToString()
     {
         return $"Airline Name: {Name}\n" +

@@ -9,7 +9,7 @@ abstract class Flight : IComparable<Flight>
     public string FlightNumber { get; set; }
     public string Origin { get; set; }
     public string Destination { get; set; }
-    public DateTime? ExpectedTime { get; set; }
+    public DateTime ExpectedTime { get; set; }
     public string Status { get; set; } = "Scheduled";
     public Flight(string flightnumber, string origin, string destination, DateTime expectedtime)
     {
@@ -18,7 +18,21 @@ abstract class Flight : IComparable<Flight>
         Destination = destination;
         ExpectedTime = expectedtime;
     }
-    public abstract double CalculateFees();
+    public virtual double CalculateFees()
+    {
+        double totalFee = 0;
+
+        if (Origin == "Singapore (SIN)")
+        {
+            totalFee = 800;
+        }
+        else if (Destination == "Singapore (SIN)")
+        {
+            totalFee = 500;
+        }
+
+        return totalFee;
+    }
     public int CompareTo(Flight other)
     {
         if (other.ExpectedTime < this.ExpectedTime) return 1;

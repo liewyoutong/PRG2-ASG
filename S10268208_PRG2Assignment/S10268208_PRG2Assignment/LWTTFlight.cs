@@ -6,16 +6,14 @@
 class LWTTFlight : Flight
 {
     public double RequestFee { get; set; }
-    public LWTTFlight(string flightNumber, string origin, string destination, DateTime expectedTime, double requestFee) : base(flightNumber, origin, destination, expectedTime)
+    public LWTTFlight(string flightNumber, string origin, string destination, DateTime expectedTime) : base(flightNumber, origin, destination, expectedTime)
     {
-        RequestFee = requestFee;
+        RequestFee = 500;
     }
 
     public override double CalculateFees()
     {
-        double basefee = 300;
-        double totalfee = basefee + RequestFee;
-        return totalfee;
+        return RequestFee + base.CalculateFees();
     }
     public override string ToString()
     {

@@ -6,16 +6,14 @@
 class DDJBFlight : Flight
 {
     public double RequestFee { get; set; }
-    public DDJBFlight(string flightNumber, string origin, string destination, DateTime expectedTime, double requestFee) : base(flightNumber, origin, destination, expectedTime)
+    public DDJBFlight(string flightNumber, string origin, string destination, DateTime expectedTime) : base(flightNumber, origin, destination, expectedTime)
     {
-        RequestFee = requestFee;
+        RequestFee = 300;
     }
 
     public override double CalculateFees()
     {
-        double basefee = 300;
-        double totalfee = basefee + RequestFee;
-        return totalfee;
+        return RequestFee + base.CalculateFees();
     }
     public override string ToString()
     {
