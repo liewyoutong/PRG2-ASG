@@ -606,19 +606,101 @@ bool AssignAllFlights()//ADvance feature A
     return true;
 }
 
-void Displaytotalfee() //Advance feature b
+void BulkUnassignedflights() //Advanced feature A
 {
-    bool allFlightsAssigned = AssignAllFlights(); 
+    Queue<Flight> unassignedFlights = new Queue<Flight>();
+    List<BoardingGate> availableGates = new List<BoardingGate>();
+    int initialAssignedFlights = 0;
+    int intialAssignedGates = 0;
+    foreach (var boardingGate in terminal.BoardingGates.Values)
+    {
+        if (boardingGate.flight == null)
+        {
+            availableGates.Add(boardingGate);
+        }
+        else
+        {
+            intialAssignedGates++;
+        }
+    }
+    foreach (var flights in terminal.Flights.Values)
+    {
+        bool isAssigned = false;
+        foreach (var boardinggate in terminal.BoardingGates.Values)
+        {
+            if (boardinggate.flight == flights)
+            {
+                isAssigned = true;
+                initialAssignedFlights++;
+                break;
+            }
+            if (isAssigned)
+            {
+                unassignedFlights.Enqueue(flights);
+            }
+        }
+    }
+    Console.WriteLine($"Total number of flights that does not have any boarding gate assigned: {unassignedFlights.Count}");
+    Console.WriteLine($"Total number of boarding gates that does not have a flight number assigned yet: {availableGates.Count}");
+    int assigned = 0;
+    while (availableGates.Count > 0 && unassignedFlights.Count > 0)
+    {
+        Flight flight = unassignedFlights.Dequeue();
+        BoardingGate assignedgate = null;
+        foreach (var gate in availableGates)
+        {
+            bool isSupportedFlight =
+                (flight is CFFTFlight && gate.SupportsCFFT) ||
+                (flight is DDJBFlight && gate.SupportsDDJB) ||
+                (flight is LWTTFlight && gate.SupportsLWTT);
 
-    if (!allFlightsAssigned)
-    {
-        Console.WriteLine("Please ensure that all unassigned flights have their boarding gates assigned before running this feature again.");
+            bool isOtherFlight = !(flight is CFFTFlight || flight is DDJBFlight || flight is LWTTFlight);
+
+            if (isSupportedFlight || isOtherFlight)
+            {
+                assignedgate = gate;
+                break;
+            }
+
+            if (assignedgate != null)
+            {
+                assignedgate.flight = flight;
+                availableGates.Remove(assignedgate);
+                assigned++;
+                Console.WriteLine($"{flight.FlightNumber} has been assigned to gate {assignedgate.GateName}");
+            }
+            else
+            {
+                Console.WriteLine($"{flight.FlightNumber} could not be assigned to any gate.");
+            }
+        }
     }
-    else
-    {
-        terminal.PrintAirlineFees();
-    }
+    int totalFlights = assigned + initialAssignedFlights;
+    int totalGates = assigned + intialAssignedGates;
+    double percentageAssigned = (double)assigned / totalFlights * 100;
+    double percentageGates = (double)assigned / totalGates * 100;
+
+    DisplayScheduledFlight(terminal, new List<Flight>());
+    Console.WriteLine($"Total number of flights assigned: {assigned}");
+    Console.WriteLine($"Remaining Unassigned Flights: {unassignedFlights.Count}");
+    Console.WriteLine($"Total number of flights and boarding gates processed: {totalFlights}, {totalGates}");
+    Console.WriteLine($"Percentage of flights and gates assigned: {percentageAssigned:F2}%, {percentageGates:F2}");
 }
+
+
+    void Displaytotalfee() //Advance feature b
+    {
+        bool allFlightsAssigned = AssignAllFlights();
+
+        if (!allFlightsAssigned)
+        {
+            Console.WriteLine("Please ensure that all unassigned flights have their boarding gates assigned before running this feature again.");
+        }
+        else
+        {
+            terminal.PrintAirlineFees();
+        }
+    }
 
 
 
@@ -682,9 +764,9 @@ while (true)
         flightList.Sort();
 
     }
-    else if(option == 8)
+    else if (option == 8)
     {
-        AssignAllFlights();
+        BulkUnassignedflights();
         Spaces();
     }
     else if (option == 9)
