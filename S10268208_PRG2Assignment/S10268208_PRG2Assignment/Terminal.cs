@@ -68,7 +68,7 @@ class Terminal
                 BoardingGate? assignedGate = null;
                 foreach (BoardingGate gate in BoardingGates.Values)
                 {
-                    if (gate.flight == flight)
+                    if (gate.Flight == flight)
                     {
                         assignedGate = gate;// Check if this gate is assigned to the current flight
 

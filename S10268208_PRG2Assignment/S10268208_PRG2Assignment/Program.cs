@@ -202,7 +202,7 @@ void AssignBoardingGate(Dictionary<string, Flight> flightDict) //task 5
         if (gate.GateName == boardinggate)
         {
             chosenGate = gate;
-            gate.flight = flight;
+            gate.Flight = flight;
             Console.WriteLine(gate.ToString());
             gateFound = true;
             break;
@@ -487,12 +487,12 @@ void CreateFlights() // task 6
             // Ensure that the gate exists in the BoardingGates collection
             if (terminal.BoardingGates.ContainsKey(newGate))
             {
-                terminal.BoardingGates[newGate].flight = flight;
+                terminal.BoardingGates[newGate].Flight = flight;
 
                 // Update the gate name for the assigned flight
                 foreach (BoardingGate gate in terminal.BoardingGates.Values)
                 {
-                    if (flight == gate.flight)
+                    if (flight == gate.Flight)
                     {
                         gate.GateName = newGate;
                     }
@@ -515,7 +515,7 @@ void CreateFlights() // task 6
             bool gateFound = false;
             foreach (BoardingGate gate in terminal.BoardingGates.Values)
             {
-                if (gate.flight == flight)
+                if (gate.Flight == flight)
                 {
                     Console.WriteLine($"Boarding Gate: {gate.GateName}");
                     gateFound = true;
@@ -572,7 +572,7 @@ void DisplayScheduledFlight(Terminal terminal, List<Flight> flightList) //task 9
 
         foreach (BoardingGate gate in terminal.BoardingGates.Values)
         {
-            if (flight == gate.flight)
+            if (flight == gate.Flight)
             {
                 assignedGate = gate.GateName;
 
@@ -614,7 +614,7 @@ void BulkUnassignedflights() //Advanced feature A
     int intialAssignedGates = 0;
     foreach (var boardingGate in terminal.BoardingGates.Values)
     {
-        if (boardingGate.flight == null)
+        if (boardingGate.Flight == null)
         {
             availableGates.Add(boardingGate);
         }
@@ -628,7 +628,7 @@ void BulkUnassignedflights() //Advanced feature A
         bool isAssigned = false;
         foreach (var boardinggate in terminal.BoardingGates.Values)
         {
-            if (boardinggate.flight == flights)
+            if (boardinggate.Flight == flights)
             {
                 isAssigned = true;
                 initialAssignedFlights++;
@@ -664,7 +664,7 @@ void BulkUnassignedflights() //Advanced feature A
 
             if (assignedgate != null)
             {
-                assignedgate.flight = flight;
+                assignedgate.Flight = flight;
                 availableGates.Remove(assignedgate);
                 assigned++;
                 Console.WriteLine($"{flight.FlightNumber} has been assigned to gate {assignedgate.GateName}");
@@ -688,24 +688,45 @@ void BulkUnassignedflights() //Advanced feature A
 }
 
 
-    void Displaytotalfee() //Advance feature b
-    {
-        bool allFlightsAssigned = AssignAllFlights();
+void Displaytotalfee()
+{
+    // Check that all flights have been assigned a boarding gate
+    bool flightsAllAssigned = true;
 
-        if (!allFlightsAssigned)
+    foreach (Flight flight in terminal.Flights.Values)
+    {
+        bool isAssigned = false;
+
+        // Check if this flight has been assigned to any gate
+        foreach (BoardingGate gate in terminal.BoardingGates.Values)
         {
-            Console.WriteLine("Please ensure that all unassigned flights have their boarding gates assigned before running this feature again.");
+            if (gate.Flight == flight)
+            {
+                isAssigned = true;
+                break; 
+            }
         }
-        else
+
+        if (!isAssigned)
         {
-            terminal.PrintAirlineFees();
+            flightsAllAssigned = false;
+            break; // If any flight is unassigned, no need to continue checking
         }
     }
 
+    // If not all flights have been assigned a boarding gate, show a message
+    if (!flightsAllAssigned)
+    {
+        Console.WriteLine("Please ensure that all unassigned flights have their boarding gates assigned before running this feature again.");
+        Console.WriteLine();
+        return; 
+    }
+
+    terminal.PrintAirlineFees();
+}
 
 
-
-//Main program
+    //Main program
 DisplayLoadingMenu();
 Spaces();
 while (true)
