@@ -684,7 +684,7 @@ void BulkUnassignedflights() //Advanced feature A
     Console.WriteLine($"Total number of flights assigned: {assigned}");
     Console.WriteLine($"Remaining Unassigned Flights: {unassignedFlights.Count}");
     Console.WriteLine($"Total number of flights and boarding gates processed: {totalFlights}, {totalGates}");
-    Console.WriteLine($"Percentage of flights and gates assigned: {percentageAssigned:F2}%, {percentageGates:F2}");
+    Console.WriteLine($"Percentage of flights and gates processed automatically: {percentageAssigned:F2}% for flights, {percentageGates:F2}% for gates");
 }
 
 
