@@ -53,13 +53,15 @@ class Terminal
     public void PrintAirlineFees()
     {
         double airlineFees;
-        double totalFees = 0;
+        double finalFees = 0;
         double totalDiscount;
         int flightCount;
         bool moreThan5Flights;
-
+        double totalFees = 0;
+        double grandTotalDiscount = 0;
+        double totalAirlineFee = 0;
         // Display header
-        Console.WriteLine($"{"Airline Name",-23}{"Airline Fee ($)",-18}{"Discount ($)",-18}3% discount applied");
+        Console.WriteLine($"{"Airline Name",-23}{"Airline Fee ($)",-18}{"Discount ($)",-18}{"Final Fee($)",-18}");
 
         foreach (Airline airline in Airlines.Values)
         {
@@ -122,13 +124,17 @@ class Terminal
                 airlineFees *= 0.97;
             }
 
-            totalFees += airlineFees - totalDiscount;
-
-            Console.WriteLine($"{airline.Name,-23}{airlineFees,-18:F2}{totalDiscount,-18:F2}{moreThan5Flights}");
+            finalFees = airlineFees - totalDiscount;
+            totalFees += finalFees;
+            grandTotalDiscount += totalDiscount;
+            totalAirlineFee += airlineFees;
+            Console.WriteLine($"{airline.Name,-23}{airlineFees,-18:N2}{totalDiscount,-18:N2}{finalFees,-18:N2}");
         }
 
         Console.WriteLine();
-        Console.WriteLine($"Total fees after discount: ${totalFees:F2}");
+        Console.WriteLine($"Total Airline Fees: ${totalAirlineFee:N2}");
+        Console.WriteLine($"Total Discount: ${grandTotalDiscount:N2}");
+        Console.WriteLine($"Total fees after discount: ${totalFees:N2}");
     }
 
     public override string ToString()

@@ -72,7 +72,6 @@ void LoadBoaringGatefiles(Terminal terminal)
             bool supportsLWTT = Convert.ToBoolean(boardingData[3]);
             BoardingGate gate = new BoardingGate(gateName, supportsCFFT, supportsDDJB, supportsLWTT);
             terminal.AddBoardingGate(gate);
-            terminal.GateFees[gate.GateName] = gate.CalculateFees(); // stores fees for all its boarding gates separately.
         }
     }
 }
