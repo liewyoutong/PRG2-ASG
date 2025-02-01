@@ -153,7 +153,7 @@ void DisplayBGList() // task 4
     Console.WriteLine("List of Boarding Gates for Changi Airport Terminal 5");
     Console.WriteLine("=============================================");
     Console.WriteLine($"{"Gate Name",-16}{"DDJB",-23}{"CFFT",-23}{"LWTT"}");
-    foreach (var boardinggate in terminal.BoardingGates.Values)
+    foreach (BoardingGate boardinggate in terminal.BoardingGates.Values)
     {
         Console.WriteLine($"{boardinggate.GateName,-16}{boardinggate.SupportsDDJB,-23}{boardinggate.SupportsCFFT,-23}{boardinggate.SupportsLWTT}");
     }
@@ -179,50 +179,71 @@ void DisplaySpeicalCode(Flight flight)
 }
 void AssignBoardingGate(Dictionary<string, Flight> flightDict) //task 5
 {
-    Console.Write("Enter flight number: ");
-    string flightNum = Console.ReadLine().ToUpper();
-    Console.Write("Enter Boarding Gate Name: ");
-    string boardinggate = Console.ReadLine().ToUpper();
-    Flight flight = flightDict[flightNum];
-    if (flightDict.ContainsKey(flightNum))
+    string flightNum;
+    while (true)
     {
-        Console.WriteLine(flight.ToString());
-        DisplaySpeicalCode(flight);
-    }
+        Console.Write("Enter flight number: ");
+        flightNum = Console.ReadLine().ToUpper();
 
-    else { Console.WriteLine("Invalid flight number"); }
-
-
-
-    bool gateFound = false;
-
-    BoardingGate chosenGate = null;
-    foreach (BoardingGate gate in terminal.BoardingGates.Values)
-    {
-        if (gate.GateName == boardinggate)
+        if (flightDict.ContainsKey(flightNum))
         {
-            chosenGate = gate;
-            gate.Flight = flight;
-            Console.WriteLine(gate.ToString());
-            gateFound = true;
-            break;
+            break; 
         }
+
+        Console.WriteLine("Invalid Flight Number. Please try again.");
     }
-    if (!gateFound)
+    Flight flight = flightDict[flightNum];
+    BoardingGate chosenGate = null;
+    while (true)
     {
+        Console.Write("Enter Boarding Gate: ");
+        string boardinggate = Console.ReadLine().ToUpper();
+
+        foreach (BoardingGate gate in terminal.BoardingGates.Values)
+        {
+            if (gate.GateName == boardinggate)
+            {
+                chosenGate = gate;
+                gate.Flight = flight;
+                Console.WriteLine(gate.ToString());
+                break;
+            }
+        }
+
+        if (chosenGate != null)
+        {
+            break; 
+        }
+
         Console.WriteLine("Invalid Boarding Gate. Please try again.");
     }
-
-    Console.Write("\nWould you like to update the status of the flight? (Y/N): ");
-    string updateStatus = Console.ReadLine().ToUpper();
+    string updateStatus;
+    while (true)
+    {
+        Console.Write("\nWould you like to update the status of the flight? (Y/N): ");
+        updateStatus = Console.ReadLine().ToUpper();
+        if (updateStatus == "Y" || updateStatus == "N")
+        {
+            break;
+        }
+        Console.WriteLine("Invalid choice. Please enter either Y/N.");
+    }
     if (updateStatus == "Y")
     {
         Console.WriteLine("\n1. Delayed");
         Console.WriteLine("2. Boarding");
         Console.WriteLine("3. On Time");
-
-        Console.Write("Please select the new status of the flight: ");
-        int option = Convert.ToInt32(Console.ReadLine());
+        int option;
+        while (true)
+        {
+            Console.Write("Please select the new status of the flight: ");
+            option = Convert.ToInt32(Console.ReadLine());
+            if (int.TryParse(Console.ReadLine(), out option) && option >= 1 && option <= 3)
+            {
+                break;
+            }
+            Console.WriteLine("Invalid choice. Please enter a number between 1 and 3.");
+        }
         if (option == 1)
         {
             flight.Status = "Delayed";
@@ -235,14 +256,9 @@ void AssignBoardingGate(Dictionary<string, Flight> flightDict) //task 5
         {
             flight.Status = "On Time";
         }
-        else
-        {
-            Console.WriteLine("Invalid choice.");
-            flight.Status = "On Time";
-        }
         Console.WriteLine($"Flight {flight.FlightNumber} has been assigned to Boarding Gate {chosenGate.GateName}!");
     }
-    else
+    else if (updateStatus == "N")
     {
         flight.Status = "On Time";
         Console.WriteLine("No changes made to the flight status.");
@@ -255,7 +271,7 @@ void CreateFlights() // task 6
     while (true)
     {
         Console.Write("Enter your flight: ");
-        string? newFlightNum = Console.ReadLine();
+        string? newFlightNum = Console.ReadLine().ToUpper();
         Console.Write("Enter your Origin: ");
         string? newOrigin = Console.ReadLine();
         Console.Write("Enter your Destination: ");
@@ -263,13 +279,13 @@ void CreateFlights() // task 6
         DateTime expectedTime;
         while (true) // allow the user to enter the time again if the input is invalid
         {
-            Console.Write("\nEnter Expected Departure/Arrival Time (dd/M/yyyy HH:mm): ");
+            Console.Write("\nEnter Expected Departure/Arrival Time (d/M/yyyy HH:mm): ");
             string? time = Console.ReadLine();
-            if (DateTime.TryParseExact(time, "dd/M/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out expectedTime))
+            if (DateTime.TryParseExact(time, "d/M/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out expectedTime))
             {
                 break; // Exit the loop if input is valid
             }
-            Console.WriteLine("\nInvalid time format. Please enter the time in dd/M/yyyy HH:mm format.");
+            Console.WriteLine("\nInvalid time format. Please enter the time in d/M/yyyy HH:mm format.");
         }
 
 
@@ -284,53 +300,67 @@ void CreateFlights() // task 6
         string specialRequstCodeInFile;
         if (specialRequestCode == "NONE")
         {
-            specialRequstCodeInFile = ""; // Assign an empty string if specialRequestCode is "NORM"
+            specialRequstCodeInFile = ""; 
         }
         else
         {
             specialRequstCodeInFile = specialRequestCode;
         }
-            Flight newFlight;
-            if (specialRequestCode.ToUpper() == "CFFT")
+        Flight newFlight;
+        if (specialRequestCode.ToUpper() == "CFFT")
+        {
+            newFlight = new CFFTFlight(newFlightNum, newOrigin, newDestination, expectedTime);
+        }
+        else if (specialRequestCode.ToUpper() == "LWTT")
+        {
+            newFlight = new LWTTFlight(newFlightNum, newOrigin, newDestination, expectedTime);
+        }
+        else if (specialRequestCode.ToUpper() == "DDJB")
+        {
+            newFlight = new DDJBFlight(newFlightNum, newOrigin, newDestination, expectedTime);
+        }
+        else
+        {
+            newFlight = new NORMFlight(newFlightNum, newOrigin, newDestination, expectedTime);
+        }
+        terminal.Flights[newFlight.FlightNumber] = newFlight;
+        Console.WriteLine($"Flight {newFlightNum} has been successfully added to the system.");
+        string filePath = "flights.csv";
+        try
+        {
+            using (StreamWriter sw = new StreamWriter(filePath, true))
             {
-                newFlight = new CFFTFlight(newFlightNum, newOrigin, newDestination, expectedTime);
+                sw.WriteLine($"{newFlightNum},{newOrigin},{newDestination},{expectedTime:h:mm tt},{specialRequstCodeInFile}");
             }
-            else if (specialRequestCode.ToUpper() == "LWTT")
+            Console.WriteLine("Flight information has been saved to flights.csv.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Unable save flight information: {ex.Message}");
+        }
+        
+        string anotherFLight;
+        
+        while (true)
+        {
+            Console.Write("Would you like to add another flight? (Y/N): ");
+            anotherFLight = Console.ReadLine().ToUpper();
+            if (anotherFLight != "Y" && anotherFLight != "N")
             {
-                newFlight = new LWTTFlight(newFlightNum, newOrigin, newDestination, expectedTime);
-            }
-            else if (specialRequestCode.ToUpper() == "DDJB")
-            {
-                newFlight = new DDJBFlight(newFlightNum, newOrigin, newDestination, expectedTime);
+                Console.WriteLine("Invalid option. Please enter either Y/N. ");
             }
             else
-            {
-                newFlight = new NORMFlight(newFlightNum, newOrigin, newDestination, expectedTime);
-            }
-            terminal.Flights[newFlight.FlightNumber] = newFlight;
-            Console.WriteLine($"Flight {newFlightNum} has been successfully added to the system.");
-            string filePath = "flights.csv";
-            try
-            {
-                using (StreamWriter sw = new StreamWriter(filePath, true))
-                {
-                    sw.WriteLine($"{newFlightNum},{newOrigin},{newDestination},{expectedTime:h:mm tt},{specialRequstCodeInFile}");
-                }
-                Console.WriteLine("Flight information has been saved to flights.csv.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Unable save flight information: {ex.Message}");
-            }
-
-            Console.Write("Would you like to add another flight? (Y/N): ");
-            string anotherFlight = Console.ReadLine().ToUpper();
-            if (anotherFlight != "Y")
             {
                 break;
             }
         }
+        if (anotherFLight != "Y")
+        {
+            break;
+        }
+            
     }
+}
 
     void DisplayAirlineFlights() // task 7
     {
@@ -593,7 +623,7 @@ void DisplayScheduledFlight(Terminal terminal, List<Flight> flightList ) //task 
         }
         else
         {
-            specialRequestCode = "None";
+            specialRequestCode = "";
         }
 
         Console.Write($"{flight.FlightNumber,-15}{airlineName,-20}{flight.Origin,-20}{flight.Destination,-20}{flight.ExpectedTime,-25}{flight.Status,-15}{specialRequestCode,-20}");
@@ -611,7 +641,7 @@ void BulkUnassignedflights(Terminal terminal) // Advanced Feature A
     List<BoardingGate> availableGates = new List<BoardingGate>();
     int initialAssignedFlights = 0;
     int initialAssignedGates = 0; 
-    foreach (var boardingGate in terminal.BoardingGates.Values)
+    foreach (BoardingGate boardingGate in terminal.BoardingGates.Values)
     {
         if (boardingGate.Flight == null)
         {
@@ -625,7 +655,7 @@ void BulkUnassignedflights(Terminal terminal) // Advanced Feature A
     foreach (var flight in terminal.Flights.Values)
     {
         bool isAssigned = false;
-        foreach (var boardingGate in terminal.BoardingGates.Values)
+        foreach (BoardingGate boardingGate in terminal.BoardingGates.Values)
         {
             if (boardingGate.Flight == flight)
             {
@@ -646,7 +676,7 @@ void BulkUnassignedflights(Terminal terminal) // Advanced Feature A
     {
         Flight flight = unassignedFlights.Dequeue();
         BoardingGate assignedGate = null;
-        foreach (var gate in availableGates)
+        foreach (BoardingGate gate in availableGates)
         {
             if ((flight is CFFTFlight && gate.SupportsCFFT) || (flight is DDJBFlight && gate.SupportsDDJB) || (flight is LWTTFlight && gate.SupportsLWTT) || (!(flight is CFFTFlight || flight is DDJBFlight || flight is LWTTFlight))) // Assign a gate without restrictions
             {
@@ -677,14 +707,14 @@ void BulkUnassignedflights(Terminal terminal) // Advanced Feature A
     DisplayScheduledFlight(terminal, terminal.Flights.Values.ToList());
     Console.WriteLine($"Total number of flights assigned: {assigned}");
     Console.WriteLine($"Remaining unassigned flights: {unassignedFlights.Count}");
-    Console.WriteLine($"Total number of flights and boarding gates processed: {totalProcessedFlights}, {totalProcessedGates}");
+    Console.WriteLine($"Total number of flights and boarding gates processed: {totalProcessedFlights}");
     if (initialAssignedFlights == 0)
     {
         Console.WriteLine("No flights were previously assigned to boarding gates hence the percentage of the total number of flights and boarding gates that were processed automatically over those that were processed automatically over those that were already assigned cannot be calculated.");
     }
     else
     {
-        Console.WriteLine($"Total number of flights and boarding gates that were processed automatically over those that were already assigned (in percentage)");
+        Console.WriteLine($"Total number of flights and boarding gates that were processed automatically over those that were already assigned (in percentage): {percentageAssignedFlights}%");
     }
     
     
@@ -731,7 +761,7 @@ void Displaytotalfee()
 }
 
 
-    //Main program
+//Main program
 DisplayLoadingMenu();
 Spaces();
 while (true)
