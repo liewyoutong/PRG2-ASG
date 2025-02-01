@@ -52,71 +52,87 @@ class Terminal
 
     public void PrintAirlineFees()
     {
-        double airlineFees = 0;
-        double totalDiscount = 0;
+        double airlineFees;
         double totalFees = 0;
-        int flightCount = 0;
-        bool moreThan5Flights = false;
-        Console.WriteLine($"{"Airline Name",-20} {"Airline Fee ($)",15} {"Discount ($)",15} {"3% Discount",15}");
+        double totalDiscount;
+        int flightCount;
+        bool moreThan5Flights;
+
+        // Display header
+        Console.WriteLine($"{"Airline Name",-23}{"Airline Fee ($)",-18}{"Discount ($)",-18}3% discount applied");
+
         foreach (Airline airline in Airlines.Values)
         {
-            airlineFees = airline.CalculateFees();
+            airlineFees = airline.CalculateFees(); // Base airline fee
+            totalDiscount = 0; 
+            flightCount = 0;
+            moreThan5Flights = false;
 
             foreach (Flight flight in airline.Flights.Values)
             {
                 flightCount++;
+
+                // Find the assigned BoardingGate for this flight
                 BoardingGate? assignedGate = null;
                 foreach (BoardingGate gate in BoardingGates.Values)
                 {
                     if (gate.Flight == flight)
                     {
                         assignedGate = gate;// Check if this gate is assigned to the current flight
-
-                        airlineFees += flight.CalculateFees();
-                        if (flightCount % 3 == 0 && flightCount > 0)
-                        {
-                            totalDiscount += 350;
-                        }
-
-                        if (flight.ExpectedTime.Hour < 11 || flight.ExpectedTime.Hour > 21)
-                        {
-                            totalDiscount += 110;
-                        }
-                        if (flight.Origin == "Dubai (DXB)" || flight.Origin == "Bangkok (BKK)" || flight.Origin == "Tokyo (NRT)")
-                        {
-                            totalDiscount += 25;
-                        }
-                        if (flight is NORMFlight)
-                        {
-                            totalDiscount += 50;
-                        }
-
-                        if (flightCount > 5)
-                        {
-                            moreThan5Flights = true;
-                        }
-                    }
-                    else
-                    {
-                        Console.WriteLine("You do not have an assigned gate: ");
+                        break; 
                     }
                 }
+
+                // If the flight has an assigned gate, add its fees
+                if (assignedGate != null)
+                {
+                    airlineFees += assignedGate.CalculateFees();
+                }
+
+                // Apply discounts
+                if (flightCount % 3 == 0 && flightCount > 0)
+                {
+                    totalDiscount += 350;
+                }
+
+                if (flight.ExpectedTime.Hour < 11 || flight.ExpectedTime.Hour > 21)
+                {
+                    totalDiscount += 110;
+                }
+
+                if (flight.Origin == "Dubai (DXB)" || flight.Origin == "Bangkok (BKK)" || flight.Origin == "Tokyo (NRT)")
+                {
+                    totalDiscount += 25;
+                }
+
+                if (flight is NORMFlight)
+                {
+                    totalDiscount += 50;
+                }
+
+                if (flightCount > 5)
+                {
+                    moreThan5Flights = true;
+                }
             }
+
+            // Apply 3% discount if applicable before adding to totalFees
             if (moreThan5Flights)
             {
-                airlineFees = airlineFees * 0.97;
+                airlineFees *= 0.97;
             }
-            totalFees += airlineFees - totalDiscount;
-            Console.WriteLine($"{airline.Name,-20} {airlineFees,15:F2} {totalDiscount,15:F2} {moreThan5Flights,15}");
 
+            totalFees += airlineFees - totalDiscount;
+
+            Console.WriteLine($"{airline.Name,-23}{airlineFees,-18:F2}{totalDiscount,-18:F2}{moreThan5Flights}");
         }
+
         Console.WriteLine();
-        Console.WriteLine($"Total fees after discount: ${totalFees}");
+        Console.WriteLine($"Total fees after discount: ${totalFees:F2}");
     }
-    
 
     public override string ToString()
     {
-        return "";
+        return $" Terminal: {TerminalName}, Airlines: {Airlines.Count}, Flights: {Flights.Count}, Boarding Gates: {BoardingGates.Count}, Gate Fees Entries: {GateFees.Count}";
     }
 }

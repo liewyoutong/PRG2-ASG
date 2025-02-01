@@ -19,10 +19,11 @@ class BoardingGate
         SupportsDDJB = supportsDDJB;
         SupportsLWTT = supportsLWTT;
     }
-    /* public double CalculateFees()
+    public double CalculateFees()
     {
-        return 0; 
-    } */
+        return 300;
+    }
+
     public override string ToString()
     {
         return $"Gate Name: {GateName}\n" +

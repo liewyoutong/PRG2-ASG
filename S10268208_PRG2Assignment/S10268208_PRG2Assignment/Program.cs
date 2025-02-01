@@ -72,6 +72,7 @@ void LoadBoaringGatefiles(Terminal terminal)
             bool supportsLWTT = Convert.ToBoolean(boardingData[3]);
             BoardingGate gate = new BoardingGate(gateName, supportsCFFT, supportsDDJB, supportsLWTT);
             terminal.AddBoardingGate(gate);
+            terminal.GateFees[gate.GateName] = gate.CalculateFees(); // stores fees for all its boarding gates separately.
         }
     }
 }
@@ -687,11 +688,11 @@ void BulkUnassignedflights() //Advanced feature A
     Console.WriteLine($"Percentage of flights and gates processed automatically: {percentageAssigned:F2}% for flights, {percentageGates:F2}% for gates");
 }
 
-
 void Displaytotalfee()
 {
     // Check that all flights have been assigned a boarding gate
     bool flightsAllAssigned = true;
+    List<Flight> unassignedFlights = new List<Flight>();
 
     foreach (Flight flight in terminal.Flights.Values)
     {
@@ -709,20 +710,21 @@ void Displaytotalfee()
 
         if (!isAssigned)
         {
-            flightsAllAssigned = false;
-            break; // If any flight is unassigned, no need to continue checking
+            unassignedFlights.Add(flight);
         }
     }
 
     // If not all flights have been assigned a boarding gate, show a message
-    if (!flightsAllAssigned)
+    if (unassignedFlights.Count > 0)
     {
         Console.WriteLine("Please ensure that all unassigned flights have their boarding gates assigned before running this feature again.");
-        Console.WriteLine();
-        return; 
+        foreach (Flight flight in unassignedFlights)
+        {
+            Console.WriteLine($"Flight Number: {flight.FlightNumber} is not assigned with a Boarding Gate");
+        }
+       
+        return;
     }
-
-    terminal.PrintAirlineFees();
 }
 
 
