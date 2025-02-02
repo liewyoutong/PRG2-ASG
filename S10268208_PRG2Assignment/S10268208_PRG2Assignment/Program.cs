@@ -42,7 +42,7 @@ void Spaces()
 }
 
 
-void LoadAirlinefiles(Terminal terminal) // task 1 
+void LoadAirlinefiles(Terminal terminal) // task 1 - YouTong
 {
     using (StreamReader sr = new StreamReader("airlines.csv"))
     {
@@ -79,7 +79,7 @@ void LoadBoaringGatefiles(Terminal terminal)
 LoadBoaringGatefiles(terminal);
 
 
-void LoadFlightfiles() //task 2
+void LoadFlightfiles() //task 2 - Yuhao
 {
     using (StreamReader sr = new StreamReader("flights.csv"))
     {
@@ -131,7 +131,7 @@ void LoadFlightfiles() //task 2
 }
 LoadFlightfiles();
 
-void FlightInfo(Dictionary<string, Airline> airlineDict)//task 3
+void FlightInfo(Dictionary<string, Airline> airlineDict)//task 3 - Yuhao
 {
     Console.WriteLine("Flight Number  Airline Name        Origin                   Destination             Expected Departure/Arrival Time");
     Console.WriteLine("----------------------------------------------------------------------------------------------------------------");
@@ -147,7 +147,7 @@ void FlightInfo(Dictionary<string, Airline> airlineDict)//task 3
 
     }
 }
-void DisplayBGList() // task 4 
+void DisplayBGList() // task 4 - YouTong
 {
     Console.WriteLine("=============================================");
     Console.WriteLine("List of Boarding Gates for Changi Airport Terminal 5");
@@ -158,7 +158,7 @@ void DisplayBGList() // task 4
         Console.WriteLine($"{boardinggate.GateName,-16}{boardinggate.SupportsDDJB,-23}{boardinggate.SupportsCFFT,-23}{boardinggate.SupportsLWTT}");
     }
 }
-void DisplaySpeicalCode(Flight flight)
+void DisplaySpeicalCode(Flight flight) // method for speicalcode
 {
     if (flight is DDJBFlight)
     {
@@ -177,7 +177,7 @@ void DisplaySpeicalCode(Flight flight)
         Console.WriteLine("Special Request Code: None");
     }
 }
-void AssignBoardingGate(Dictionary<string, Flight> flightDict) //task 5
+void AssignBoardingGate(Dictionary<string, Flight> flightDict) //task 5 - Yuhao
 {
     string flightNum;
     while (true)
@@ -279,7 +279,7 @@ void AssignBoardingGate(Dictionary<string, Flight> flightDict) //task 5
 }
 
 
-void CreateFlights() // task 6
+void CreateFlights() // task 6 - Yuhao
 {
     while (true)
     {
@@ -375,7 +375,7 @@ void CreateFlights() // task 6
     }
 }
 
-void DisplayAirlineFlights() // task 7
+void DisplayAirlineFlights() // task 7 - YouTong
 {
     Console.WriteLine("=============================================");
     Console.WriteLine("List of Airlines for Changi Airport Terminal 5");
@@ -426,7 +426,7 @@ void DisplayAirlineFlights() // task 7
 
 }
  
-void ModifyFlightDetails() // Task 8
+void ModifyFlightDetails() // Task 8 - YouTong
 {
     DisplayAirlineFlights();
 
@@ -592,7 +592,7 @@ void ModifyFlightDetails() // Task 8
                 case 1:
                     modifiedFlight = new DDJBFlight(flight.FlightNumber, flight.Origin, flight.Destination, expectedTime);
                     Console.WriteLine("Special Request Code updated to DDJB.");
-             
+
                     break;
                 case 2:
                     modifiedFlight = new CFFTFlight(flight.FlightNumber, flight.Origin, flight.Destination, expectedTime);
@@ -617,20 +617,36 @@ void ModifyFlightDetails() // Task 8
         }
         else if (modifyOption == 4) // Modify Boarding Gate
         {
-            Console.Write("Enter new Boarding Gate: ");
-            string newGate = Console.ReadLine().ToUpper();
+            string newGate;
 
-            if (terminal.BoardingGates.ContainsKey(newGate))
+            while (true)
             {
-                terminal.BoardingGates[newGate].Flight = flight;
-
-                // Update the gate name for the assigned flight
-                foreach (BoardingGate gate in terminal.BoardingGates.Values)
+                try
                 {
-                    if (gate.Flight == flight)
+                    Console.Write("Enter new Boarding Gate: ");
+                    newGate = Console.ReadLine().ToUpper();
+
+                    // Check if the gate exists in the dictionary
+                    if (terminal.BoardingGates.ContainsKey(newGate))
                     {
-                        gate.GateName = newGate;
+                        terminal.BoardingGates[newGate].Flight = flight;
+
+                        // Update the gate name for the assigned flight
+                        foreach (BoardingGate gate in terminal.BoardingGates.Values)
+                        {
+                            if (gate.Flight == flight)
+                            {
+                                gate.GateName = newGate;
+                            }
+                        }
+                        Console.WriteLine($"Boarding gate has been updated to {newGate}.");
+                        break;
                     }
+                    throw new KeyNotFoundException(); // If the gate does not exist, throw an exception
+                }
+                catch (KeyNotFoundException)
+                {
+                    Console.WriteLine("Invalid Boarding Gate. Please enter a valid gate.");
                 }
             }
         }
@@ -650,7 +666,7 @@ void ModifyFlightDetails() // Task 8
         Console.WriteLine($"Flight {flightName} has been successfully deleted.");
     }
 }
-void DisplayScheduledFlight(Terminal terminal, List<Flight> flightList ) //task 9
+void DisplayScheduledFlight(Terminal terminal, List<Flight> flightList) //task 9 - Yuhao
 {
     Console.WriteLine($"{"Flight Number",-15}{"Airline Name",-20}{"Origin",-20}{"Destination",-20}{"Expected Time",-25}{"Status",-15}{"Special Request",-20}{"Boarding Gate",-15}");
     if (flightList.Count == 0)
@@ -708,7 +724,7 @@ void DisplayScheduledFlight(Terminal terminal, List<Flight> flightList ) //task 
     }
 }
 
-void BulkUnassignedflights(Terminal terminal) // Advanced Feature A
+void BulkUnassignedflights(Terminal terminal) // Advanced Feature A - YouTong
 {
     Queue<Flight> unassignedFlights = new Queue<Flight>();
     List<BoardingGate> availableGates = new List<BoardingGate>();
@@ -793,7 +809,7 @@ void BulkUnassignedflights(Terminal terminal) // Advanced Feature A
     
 }
 
-void Displaytotalfee()
+void Displaytotalfee()//Advanced Feature B - Yuhao
 {
     // Check that all flights have been assigned a boarding gate
     bool flightsAllAssigned = true;
