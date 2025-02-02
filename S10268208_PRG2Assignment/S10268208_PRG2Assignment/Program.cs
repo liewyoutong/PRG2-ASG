@@ -24,7 +24,7 @@ void DisplayMenu()
     Console.WriteLine("3. Assign a Boarding Gate to a Flight");
     Console.WriteLine("4. Create Flight");
     Console.WriteLine("5. Display Airline Flights"); 
-    Console.WriteLine("6. Modify Flight Detailst");
+    Console.WriteLine("6. Modify Flight Details");
     Console.WriteLine("7. Display Flight Schedule");
     Console.WriteLine("8. Process all unassigned flights to boarding gates in bulk");
     Console.WriteLine("9. Display the total fee per airline for the day");
@@ -92,7 +92,7 @@ void LoadFlightfiles() //task 2
             string destination = flightData[2];
             string time = flightData[3];
             string specialRequestCode = flightData[4];
-            DateTime expectedTime = DateTime.ParseExact(time, "h:mm tt", null);
+            DateTime expectedTime = DateTime.ParseExact(time, "h:mm tt", null); //ParseExact? It ensures that the input matches exactly with the format you specify
             Flight flight = null;
             string airlineCode = flightNumber.Substring(0, 2); // to extract the airline code from the flight number
             if (string.IsNullOrWhiteSpace(specialRequestCode))
@@ -187,7 +187,7 @@ void AssignBoardingGate(Dictionary<string, Flight> flightDict) //task 5
 
         if (flightDict.ContainsKey(flightNum))
         {
-            break; 
+            break;
         }
 
         Console.WriteLine("Invalid Flight Number. Please try again.");
@@ -212,7 +212,7 @@ void AssignBoardingGate(Dictionary<string, Flight> flightDict) //task 5
 
         if (chosenGate != null)
         {
-            break; 
+            break;
         }
 
         Console.WriteLine("Invalid Boarding Gate. Please try again.");
@@ -237,12 +237,25 @@ void AssignBoardingGate(Dictionary<string, Flight> flightDict) //task 5
         while (true)
         {
             Console.Write("Please select the new status of the flight: ");
-            option = Convert.ToInt32(Console.ReadLine());
-            if (int.TryParse(Console.ReadLine(), out option) && option >= 1 && option <= 3)
+            string input = Console.ReadLine();
+
+            try
             {
-                break;
+                option = Convert.ToInt32(input);
+
+                if (option >= 1 && option <= 3)
+                {
+                    break; // If input is valid, break out of the loop
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice. Please enter a number between 1 and 3.");
+                }
             }
-            Console.WriteLine("Invalid choice. Please enter a number between 1 and 3.");
+            catch (FormatException)
+            {
+                Console.WriteLine("Invalid input. Please enter a valid number between 1 and 3.");
+            }
         }
         if (option == 1)
         {
@@ -412,75 +425,166 @@ void DisplayAirlineFlights() // task 7
     }
 
 }
-
-void ModifyFlightDetails() // task 8 
+ 
+void ModifyFlightDetails() // Task 8
 {
     DisplayAirlineFlights();
-    string speicalRequest = "";
-    Console.Write("Choose an existing Flight to modify or delete:  ");
-    string flightName = Console.ReadLine().ToUpper();
-    Console.WriteLine("1. Modify Flight");
-    Console.WriteLine("2. Delete Flight");
-    Console.WriteLine("Choose an option: ");
-    int option;
-    try
+
+    string flightName;
+    while (true)
     {
-    option = Convert.ToInt32(Console.ReadLine());
-    }
-    catch (FormatException)
-    {
-        Console.WriteLine("Invalid option. Please enter a number between 1 and 2.");
-        return;
-    }
-    if (option == 1)
-    {
-        Flight flight = terminal.Flights[flightName];
-        Airline airline = terminal.GetAirlineFromFlight(flight);
-        Console.WriteLine("Choose an option to modify:");
-        Console.WriteLine("1. Modify Origin/Destination/Expected Time");
-        Console.WriteLine("2. Modify Flight Status");
-        Console.WriteLine("3. Modify Special Request Code");
-        Console.WriteLine("4. Modify Boarding Gate");
-        Console.Write("Enter your choice: ");
-        int ModifyOption = Convert.ToInt32(Console.ReadLine());
-    if (ModifyOption == 1)
-    {
-        Console.Write("Enter new Origin: ");
-        string newOrigin = Console.ReadLine();
-        Console.Write("Enter new Destination: ");
-        string newDestination = Console.ReadLine();
-        Console.Write("Enter new Expected Departure/Arrival Time (dd/MM/yyyy hh:mm): ");
-        string time = Console.ReadLine();
-        if (DateTime.TryParseExact(time, "dd/M/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out DateTime expectedTime))
+        Console.Write("Choose an existing Flight to modify or delete: ");
+        flightName = Console.ReadLine().ToUpper();
+
+        // Ensure flight format (must contain space)
+        if (!flightName.Contains(" "))
         {
+            Console.WriteLine("Invalid format! Ensure a space between airline code and number (e.g SQ 115).");
+            continue;
+        }
+
+        // Check if flight exists
+        if (!terminal.Flights.ContainsKey(flightName))
+        {
+            Console.WriteLine("Flight not found. Please enter a valid flight number.");
+            continue;
+        }
+        break; // Valid input
+    }
+
+    int option;
+    while (true)
+    {
+        try
+        {
+            Console.WriteLine("1. Modify Flight");
+            Console.WriteLine("2. Delete Flight");
+            Console.Write("Choose an option: ");
+            option = Convert.ToInt32(Console.ReadLine());
+
+            if (option == 1 || option == 2) break; 
+
+            Console.WriteLine("Invalid option. Please enter 1 or 2.");
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Invalid input. Please enter a number (1 or 2).");
+        }
+    }
+
+    Flight flight = terminal.Flights[flightName];
+    Airline airline = terminal.GetAirlineFromFlight(flight);
+
+    if (option == 1) // Modify Flight
+    {
+        int modifyOption;
+        while (true)
+        {
+            try
+            {
+                Console.WriteLine("Choose an option to modify:");
+                Console.WriteLine("1. Modify Origin/Destination/Expected Time");
+                Console.WriteLine("2. Modify Flight Status");
+                Console.WriteLine("3. Modify Special Request Code");
+                Console.WriteLine("4. Modify Boarding Gate");
+                Console.Write("Enter your choice: ");
+                modifyOption = Convert.ToInt32(Console.ReadLine());
+
+                if (modifyOption >= 1 && modifyOption <= 4) break;
+
+                Console.WriteLine("Invalid choice. Please enter a number from 1 to 4.");
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Invalid input. Please enter a number from 1 to 4.");
+            }
+        }
+
+        if (modifyOption == 1) // Modify Origin, Destination, Expected Time
+        {
+            Console.Write("Enter new Origin: ");
+            string newOrigin = Console.ReadLine();
+            Console.Write("Enter new Destination: ");
+            string newDestination = Console.ReadLine();
+
+            DateTime expectedTime;
+            while (true)
+            {
+                Console.Write("Enter new Expected Departure/Arrival Time (dd/MM/yyyy HH:mm): ");
+                string timeInput = Console.ReadLine();
+
+                if (DateTime.TryParseExact(timeInput, "dd/MM/yyyy HH:mm", null, System.Globalization.DateTimeStyles.None, out expectedTime))
+                {
+                    break; // Valid time
+                }
+                Console.WriteLine("Invalid time format. Please enter in dd/MM/yyyy HH:mm format.");
+            }
+
             flight.Origin = newOrigin;
             flight.Destination = newDestination;
             flight.ExpectedTime = expectedTime;
         }
-        else
+        else if (modifyOption == 2) // Modify Flight Status
         {
-            Console.WriteLine("Invalid time format. Please enter the time in dd/mm/yyyy hh:mm format.");
+            int newStatus;
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine("1. Delayed");
+                    Console.WriteLine("2. Boarding");
+                    Console.WriteLine("3. On Time");
+                    Console.Write("Choose new status: ");
+                    newStatus = Convert.ToInt32(Console.ReadLine());
+
+                    if (newStatus >= 1 && newStatus <= 3) break;
+
+                    Console.WriteLine("Invalid choice. Please enter a number from 1 to 3.");
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid input. Please enter a number from 1 to 3.");
+                }
+            }
+
+            if (newStatus == 1)
+            {
+                flight.Status = "Delayed";
+            }
+            else if (newStatus == 2)
+            {
+                flight.Status = "Boarding";
+            }
+            else
+            {
+                flight.Status = "On Time";
+            }
+            Console.WriteLine("Flight status has been updated.\n");
         }
-    }
-    else if (ModifyOption == 2)
-    {
-        Console.WriteLine("1. Delayed");
-        Console.WriteLine("2. Boarding");
-        Console.WriteLine("3. On Time");
-        Console.Write("Choose new status: ");
-        int newStatus = Convert.ToInt32(Console.ReadLine());
-        flight.Status = newStatus == 1 ? "Delayed" : newStatus == 2 ? "Boarding" : "On Time";
-        Console.WriteLine("Flight status has been updated.\n");
-    }
-    else if (ModifyOption == 3)
-    {
+        else if (modifyOption == 3) // Modify Special Request Code
         {
-            Console.WriteLine("1. DDJB");
-            Console.WriteLine("2. CFFT");
-            Console.WriteLine("3. LWTT");
-            Console.WriteLine("4. None");
-            Console.Write("Choose new Special Request Code: ");
-            int newCode = Convert.ToInt32(Console.ReadLine());
+            int newCode;
+            while (true)
+            {
+                try
+                {
+                    Console.WriteLine("1. DDJB");
+                    Console.WriteLine("2. CFFT");
+                    Console.WriteLine("3. LWTT");
+                    Console.WriteLine("4. None");
+                    Console.Write("Choose new Special Request Code: ");
+                    newCode = Convert.ToInt32(Console.ReadLine());
+
+                    if (newCode >= 1 && newCode <= 4) break;
+
+                    Console.WriteLine("Invalid choice. Please enter a number from 1 to 4.");
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Invalid input. Please enter a number from 1 to 4.");
+                }
+            }
+
             DateTime expectedTime = flight.ExpectedTime;
             Flight modifiedFlight;
             switch (newCode)
@@ -500,98 +604,61 @@ void ModifyFlightDetails() // task 8
                     break;
                 case 4:
                     modifiedFlight = new NORMFlight(flight.FlightNumber, flight.Origin, flight.Destination, expectedTime);
-                    Console.WriteLine("Special Request Code updated to NORM.");
+                    Console.WriteLine("Special Request Code updated to None.");
                     break;
                 default:
                     Console.WriteLine("Invalid choice. No changes made to Special Request Code.");
-                    return; 
+                    return;
             }
 
-            terminal.Flights[flight.FlightNumber] = modifiedFlight;
-            Airline associatedAirline = terminal.GetAirlineFromFlight(flight);
+            terminal.Flights[flight.FlightNumber] = modifiedFlight; // Update the flight in the dictionary
+            flight = modifiedFlight; // Reassign 'flight' to the new modifiedFlight reference
+            Console.WriteLine($"Special Request Code updated.");
         }
- 
-    }
-
-
-
-
-    else if (ModifyOption == 4)
-    {
-        Console.Write("Enter new Boarding Gate: ");
-        string newGate = Console.ReadLine().ToUpper();
-        // Ensure that the gate exists in the BoardingGates collection
-        if (terminal.BoardingGates.ContainsKey(newGate))
+        else if (modifyOption == 4) // Modify Boarding Gate
         {
-            terminal.BoardingGates[newGate].Flight = flight;
+            Console.Write("Enter new Boarding Gate: ");
+            string newGate = Console.ReadLine().ToUpper();
 
-            // Update the gate name for the assigned flight
-            foreach (BoardingGate gate in terminal.BoardingGates.Values)
+            if (terminal.BoardingGates.ContainsKey(newGate))
             {
-                if (flight == gate.Flight)
+                terminal.BoardingGates[newGate].Flight = flight;
+
+                // Update the gate name for the assigned flight
+                foreach (BoardingGate gate in terminal.BoardingGates.Values)
                 {
-                    gate.GateName = newGate;
+                    if (gate.Flight == flight)
+                    {
+                        gate.GateName = newGate;
+                    }
                 }
             }
         }
-    }
-    else
-    {
-        Console.WriteLine("Invalid option. Please restart and enter a valid number between 1 and 4.");
-    }
 
         Console.WriteLine("Flight updated!");
         Console.WriteLine($"Flight Number: {flight.FlightNumber}");
         Console.WriteLine($"Airline Name: {airline.Name}");
         Console.WriteLine($"Origin: {flight.Origin}");
         Console.WriteLine($"Destination: {flight.Destination}");
-        Console.WriteLine($"Expected Departure/Arrival Time: {flight.ExpectedTime:dd/M/yyyy h:mm:ss tt}");
+        Console.WriteLine($"Expected Departure/Arrival Time: {flight.ExpectedTime:dd/MM/yyyy HH:mm}");
         Console.WriteLine($"Status: {flight.Status}");
         DisplaySpeicalCode(flight);
-        bool gateFound = false;
-        foreach (BoardingGate gate in terminal.BoardingGates.Values)
-        {
-            if (gate.Flight == flight)
-            {
-                Console.WriteLine($"Boarding Gate: {gate.GateName}");
-                gateFound = true;
-                break; // Exit the loop once the gate is found
-            }
-        }
-
-        if (!gateFound)
-        {
-            Console.WriteLine("Boarding Gate: Unassigned");
-        }
-}
-    else if (option == 2)
-    {
-        if (terminal.Flights.ContainsKey(flightName))
-        {
-            Flight flight = terminal.Flights[flightName];
-            Airline airline = terminal.GetAirlineFromFlight(flight);
-            airline.RemoveFlight(flight);
-            terminal.Flights.Remove(flightName);
-            Console.WriteLine($"Flight {flightName} has been successfully deleted.");
-        }
-        else
-        {
-            Console.WriteLine("Invalid Flight Number.");
-        }
     }
-    else
+    else if (option == 2) // Delete Flight
     {
-        Console.WriteLine("Invalid choice.");
-
+        terminal.Flights.Remove(flightName);
+        Console.WriteLine($"Flight {flightName} has been successfully deleted.");
     }
 }
-
 void DisplayScheduledFlight(Terminal terminal, List<Flight> flightList ) //task 9
 {
     Console.WriteLine($"{"Flight Number",-15}{"Airline Name",-20}{"Origin",-20}{"Destination",-20}{"Expected Time",-25}{"Status",-15}{"Special Request",-20}{"Boarding Gate",-15}");
     if (flightList.Count == 0)
     {
-        flightList.AddRange(terminal.Flights.Values);
+        foreach (Flight flight in terminal.Flights.Values)
+        {
+            flightList.Add(flight);
+        }
     }
     flightList.Sort();
     foreach (Flight flight in flightList)
@@ -781,7 +848,7 @@ while (true)
     }
     catch (FormatException)
     {
-        Console.WriteLine("Invalid option. Please enter a number between 0 and 7.");
+        Console.WriteLine("Invalid option. Please enter a number between 0 and 9.");
         continue;
     }
     if (option == 0)
@@ -838,6 +905,6 @@ while (true)
     }
     else
     {
-        Console.WriteLine("Invalid option. Please enter a number between 0 and 7.");
+        Console.WriteLine("Invalid option. Please enter a number between 0 and 9.");
     }
 }
